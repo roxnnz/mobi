@@ -1,3 +1,12 @@
-{
-    
-}
+[
+    {
+        "Product": "Fish",
+        "Price": 5.99,
+        "Description": "Fish and chips"
+    },
+    {
+        "Product": "chips",
+        "Price": 5.99,
+        "Description": "Fish and chips"
+    }
+]
