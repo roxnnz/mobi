@@ -1,20 +1,20 @@
 import type { NextPage } from 'next';
 const Profile: NextPage = () => {
   return (
-    <div class="columns">
-      <div class="column">
-        <h1 class="bd-notification is-full">Store Name</h1>
-        <div class="columns is-mobile">
-          <div class="column is-one-third">
-            <p class="bd-notification is-danger">Product</p>
+    <div className="columns">
+      <div className="column">
+        <h1 className="bd-notification is-full">Store Name</h1>
+        <div className="columns is-mobile">
+          <div className="column is-one-third">
+            <p className="bd-notification is-danger">Product</p>
             <p>Example product</p>
           </div>
-          <div class="column is-half">
-            <p class="bd-notification is-danger">Description</p>
+          <div className="column is-half">
+            <p className="bd-notification is-danger">Description</p>
             <p>Example Description</p>
           </div>
-          <div class="column is-one-fifth">
-            <p class="bd-notification is-danger">Price</p>
+          <div className="column is-one-fifth">
+            <p className="bd-notification is-danger">Price</p>
             <p>example price</p>
           </div>
         </div>
