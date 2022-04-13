@@ -4,7 +4,7 @@ import StoresData from '../services/StoresData';
 const storeDatasService = new StoresData();
 const stores = storeDatasService.getAllStores();
 
-const Profile: NextPage = () => {
+const Stores: NextPage = () => {
     return (
         <div className="columns is-multiline">
             {stores.map((stores: Store, index) => (
@@ -37,4 +37,4 @@ const Profile: NextPage = () => {
     );
 };
 
-export default Profile;
+export default Stores;
