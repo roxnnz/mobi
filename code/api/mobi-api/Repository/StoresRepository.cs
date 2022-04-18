@@ -1,4 +1,5 @@
 ﻿using mobi_api.Model;
+using System.Text.Json;
 
 namespace mobi_api.Repository
 {
@@ -11,22 +12,20 @@ namespace mobi_api.Repository
             
         }
 
-        public IEnumerable<Store> GetAllStores()
+        public List<Store> GetAllStores()
         {
             return this.GetMockStoresFromJson();
         }
 
-        private IEnumerable<Store> GetMockStoresFromJson()
+        private List<Store> GetMockStoresFromJson()
         {
-            // deserialize json
-            var store = new Store()
+            using (var stream = new StreamReader("MockData/Stores.json"))
             {
-                StoreName = "Jimmy Mobi",
-                Website = "www.httpasdf.com",
-                PhoneNumber = "1234",
-                Address = "asdf"
-            };
-            return new Store[] { store };
+                string jsonString = stream.ReadToEnd();
+                List<Store> stores = JsonSerializer.Deserialize<List<Store>>(jsonString);
+
+                return stores;
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace mobi_api.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<Store> Get()
+        public List<Store> Get()
         {
             return this.storeRepository.GetAllStores();
         }

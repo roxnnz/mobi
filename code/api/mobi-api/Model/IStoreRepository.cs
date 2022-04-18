@@ -2,6 +2,6 @@
 {
     public interface IStoreRepository
     {
-        IEnumerable<Store> GetAllStores();
+        List<Store> GetAllStores();
     }
 }
