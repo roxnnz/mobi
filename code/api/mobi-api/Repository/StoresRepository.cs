@@ -19,12 +19,19 @@ namespace mobi_api.Repository
 
         private List<Store> GetMockStoresFromJson()
         {
-            using (var stream = new StreamReader("MockData/Stores.json"))
+            try
             {
-                string jsonString = stream.ReadToEnd();
-                List<Store> stores = JsonSerializer.Deserialize<List<Store>>(jsonString);
+                using (var stream = new StreamReader("MockData/Stores.json"))
+                {
+                    string jsonString = stream.ReadToEnd();
+                    List<Store> stores = JsonSerializer.Deserialize<List<Store>>(jsonString);
 
-                return stores;
+                    return stores;
+                }
+            }
+            catch (IOException ioex)
+            {
+                throw new Exception(ioex.Message);
             }
         }
     }
