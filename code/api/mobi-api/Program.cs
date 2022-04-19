@@ -5,7 +5,6 @@ using mobi_api.Model;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddMvc().AddFluentValidation(config =>
 {
@@ -16,6 +15,7 @@ builder.Services.AddMvc().AddFluentValidation(config =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IStoreRepository, StoresRepository>();
+builder.Services.AddScoped<IProductRepository, ProductsRepository>();
 
 var app = builder.Build();
 
