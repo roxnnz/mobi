@@ -1,0 +1,102 @@
+[
+  {
+    "ProductDescription": "Beefy- Spicy beef patty , fire roasted salsa, chargrilled onion and capsicum with mesculin, double smoked cheese and smoked Tabasco aioli.",
+    "ProductName": "MT Vic Burger of The Month",
+    "ProductPrice": 16
+  },
+  {
+    "ProductName": "Thorndon Burger of The Month",
+    "ProductPrice": 16,
+    "ProductDescription": "Mystery Chicken- Grilled chicken breast with sweet & sour pickled cauliflower, homemade raw slaw and aioli."
+  },
+  {
+    "ProductName": "Stick Pork Belly Burger",
+    "ProductPrice": 15,
+    "ProductDescription": "Pickled red cabbage, ginger, coriander and crispy shallot salad with confit garlic aioli"
+  },
+  {
+    "ProductName": "Mexican Mussel",
+    "ProductPrice": 14,
+    "ProductDescription": "Mussel fritter with somked bacon, habanero and corn sals and lime mayo"
+  },
+  {
+    "ProductName": "Tuk Tuk Tarakihi",
+    "ProductPrice": 14,
+    "ProductDescription": "Prawn floss and kaffir lime-crumbed tarakihi bean sprout, peanut and coconut salad, herbs and Sriracha mayo in a squid-ink bun"
+  },
+  {
+    "ProductName": "Classic Cheese Burger",
+    "ProductPrice": 15,
+    "ProductDescription": "Handmade NZ beef patttie, Gherkin, cheese, aioli and rocket sauce with crispy lettuce, red onion and tomato"
+  },
+  {
+    "ProductName": "Souther Style Chicken Burger",
+    "ProductPrice": 15,
+    "ProductDescription": "Southern Style Chicken Burger"
+  },
+  {
+    "ProductName": "Slow Roast Lamb Shoulder Burger",
+    "ProductPrice": 15,
+    "ProductDescription": "Quinoa, vegetable and chick pea patty, guacamole, lecttuce, tomato, red onion and beetroot relish."
+  },
+  {
+    "ProductName": "Halloumi Burger",
+    "ProductPrice": 15,
+    "ProductDescription": "Grilled Zany Zeus Halloumi, beetroot hummus, rocket and harissa relish."
+  },
+  {
+    "ProductName": "Fish Finger Sandwich",
+    "ProductPrice": 12,
+    "ProductDescription": "Fish finger made into a sandwich"
+  },
+  {
+    "ProductName": "Fish Burger",
+    "ProductPrice": 15,
+    "ProductDescription": "Cucumber, capsicum, spring onion, seasme seeds, coriander, chilli, coconut and kimchi mayo"
+  },
+  {
+    "ProductName": "Snapper",
+    "ProductPrice": 15.90,
+    "ProductDescription": "Classic Kiwi species and sells out fast - Delicated fillets with a sweet meaty flavour."
+  },
+  {
+    "ProductName": "Groper/hapuka",
+    "ProductPrice": 15.90,
+    "ProductDescription": "One of the staff's favourites. Big meaty white fillets with a high oil content due to depth these tasty fish live in."
+  },
+  {
+    "ProductName": "Kingfish",
+    "ProductPrice": 14.60,
+    "ProductDescription": "Iconic kiwi fish species, flavoursome with a high oil content and suits grilling and is best cooked slightly"
+  },
+  {
+    "ProductName": "Gurnard",
+    "ProductPrice": 11.50,
+    "ProductDescription": "Smaller fillets and sometimes a couple are given per protion. The Flake is small and great savoury flour."
+  },
+  {
+    "ProductName": "Tarakihi",
+    "ProductPrice": 10.80,
+    "ProductDescription": "Iconic kiwi species - delicate white fillets with a medium sized flake and subtle flavour."
+  },
+  {
+    "ProductName": "Blue Warehou",
+    "ProductPrice": 8.70,
+    "ProductDescription": "Delicious firm white fillet with a large flake and medium oil conctent."
+  },
+  {
+    "ProductName": "Lemon Fish",
+    "ProductPrice": 8.10,
+    "ProductDescription": "Soft texture and meaty flavour, Excellent beer battered."
+  },
+  {
+    "ProductName": "Moki",
+    "ProductPrice": 8.70,
+    "ProductDescription": "Pink to white fillets with a medium flake and good flavour."
+  },
+  {
+    "ProductName": "Trevally",
+    "ProductPrice": 8.70,
+    "ProductDescription": "Pink to white fillets with a medium flake and good flavour profile."
+  }
+]
