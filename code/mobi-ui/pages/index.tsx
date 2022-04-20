@@ -14,11 +14,11 @@ const Home: NextPage = () => {
               <div className="tile">
                 <div className="tile is-parent is-vertical">
                   <article className="tile is-child notification is-primary">
-                    <p className="title">Vertical...</p>
+                    <p className="title">Ads</p>
                     <p className="subtitle">Top tile</p>
                   </article>
                   <article className="tile is-child notification is-warning">
-                    <p className="title">...tiles</p>
+                    <p className="title">Ads</p>
                     <p className="subtitle">Bottom tile</p>
                   </article>
                 </div>
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
               </div>
               <div className="tile is-parent">
                 <article className="tile is-child notification is-danger">
-                  <p className="title">Wide tile</p>
+                  <p className="title">Ads</p>
                   <p className="subtitle">Aligned with the right tile</p>
                   <div className="content"></div>
                 </article>
