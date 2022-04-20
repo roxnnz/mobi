@@ -30,7 +30,7 @@ export default function LoginForm() {
       </label>
 
       <div className="field">
-        <p className="control">
+        <div className="control">
           <button className="button is-success mb-2">Login</button>
           <button className="button is-white">Login with Google</button>
           <p className="mb-2">
@@ -40,7 +40,7 @@ export default function LoginForm() {
           <a href="" className="mb-2">
             Forgot your password?
           </a>
-        </p>
+        </div>
       </div>
     </>
   );
