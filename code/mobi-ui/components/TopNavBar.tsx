@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { NextPage } from "next";
 
 const TopNavBar: NextPage = () => {
   return (
@@ -26,8 +26,15 @@ const TopNavBar: NextPage = () => {
       </div>
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a className="navbar-item">Home</a>
-          <a className="navbar-item">Contact</a>
+          <a href="http://localhost:3000/" className="navbar-item">
+            Home
+          </a>
+          <a href="http://localhost:3000/contact" className="navbar-item">
+            Contact us
+          </a>
+          <a href="http://localhost:3000/login" className="navbar-item">
+            Login
+          </a>
         </div>
       </div>
     </nav>
