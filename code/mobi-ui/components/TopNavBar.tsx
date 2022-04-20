@@ -26,13 +26,13 @@ const TopNavBar: NextPage = () => {
       </div>
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a href="http://localhost:3000/" className="navbar-item">
+          <a href="/" className="navbar-item">
             Home
           </a>
-          <a href="http://localhost:3000/contact" className="navbar-item">
+          <a href="/contact" className="navbar-item">
             Contact us
           </a>
-          <a href="http://localhost:3000/login" className="navbar-item">
+          <a href="/login" className="navbar-item">
             Login
           </a>
         </div>
