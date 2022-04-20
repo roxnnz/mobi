@@ -1,22 +1,19 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import LoginForm from "../components/LoginForm";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import LoginForm from '../components/LoginForm';
 
-const Home: NextPage = () => {
+const Login: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Login Page</title>
+        <title>Mobi - login</title>
       </Head>
       <main>
-        <section className="section is-medium">
-          <div className="columns is-mobile is-centered">
-            <div className="column is-half">
-              <div className="content">
-                <h1>Login</h1>
-              </div>
-              <LoginForm></LoginForm>
-            </div>
+        <section className="hero">
+          <div className="hero-body">
+            <p className="title">Mobi</p>
+            <p className="subtitle">Login to your account</p>
+            <LoginForm />
           </div>
         </section>
       </main>
@@ -24,4 +21,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Login;
