@@ -15,7 +15,7 @@ const Home: NextPage = () => {
               <div className="content">
                 <h1>Contact us</h1>
               </div>
-              <Contact></Contact>
+              <Contact />
             </div>
           </div>
         </section>
