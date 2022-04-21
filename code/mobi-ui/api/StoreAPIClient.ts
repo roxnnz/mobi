@@ -7,7 +7,7 @@ class StoreAPIClient extends MobiAPIClient implements IStoreAPIClient {
         super();
     }
 
-    async getById(id:string){
+    async getById(id: string) {
         try {
             const response = await this.fetch(`${this.host}/api/stores/${id}`)
             const data = response.json()
