@@ -1,6 +1,5 @@
 using FluentValidation.AspNetCore;
 using mobi_api.Repository;
-using mobi_api.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
