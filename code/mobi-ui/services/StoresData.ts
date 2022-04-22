@@ -1,4 +1,4 @@
-import StoresMockData from '../mock/stores.json';
+import StoreAPIClient from '../api/StoreAPIClient';
 import { Store } from '../models/Store';
 /**
  * @description StoresData is a class provice set and get stores.
@@ -6,12 +6,12 @@ import { Store } from '../models/Store';
  * @class StoresData
  */
 export default class StoresData {
-  stores: Array<Store>;
+  storeAPIClient: StoreAPIClient;
   constructor() {
-    this.stores = StoresMockData;
+    this.storeAPIClient = new StoreAPIClient()
   }
 
-  public getAllStores(): Array<Store> {
-    return this.stores;
+  public async getAllStores(): Promise<Array<Store>> {
+    return await this.storeAPIClient.get();
   }
 }
