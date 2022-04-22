@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace mobi_api.Repository
 {
-    interface IProductRepository
+    public interface IProductRepository
     {
         List<Product> GetAllProducts();
     }

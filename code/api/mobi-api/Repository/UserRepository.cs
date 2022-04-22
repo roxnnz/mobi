@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace mobi_api.Repository
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         List<User> GetAllUsers();
     }
@@ -18,7 +18,7 @@ namespace mobi_api.Repository
 
         public List<User> GetAllUsers()
         {
-            return this.GetMockStoresFromJson();
+            return this.GetMockUsersFromJson();
         }
 
         private List<User> GetMockUsersFromJson()
@@ -28,9 +28,9 @@ namespace mobi_api.Repository
                 using (var stream = new StreamReader("MockData/Users.json"))
                 {
                     string jsonString = stream.ReadToEnd();
-                    List<User> stores = JsonSerializer.Deserialize<List<User>>(jsonString);
+                    List<User> users= JsonSerializer.Deserialize<List<User>>(jsonString);
 
-                    return user;
+                    return users;
                 }
             }
             catch (IOException ioex)
