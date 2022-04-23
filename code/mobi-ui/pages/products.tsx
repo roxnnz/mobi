@@ -1,15 +1,17 @@
 import type { NextPage } from 'next';
 import { Product } from '../models/Product';
 import { useState } from 'react'; //set initial state for the page, re-render the page 
-// import ProductsData from '../services/ProductsData';
-// const productDataService = new ProductsData();
-// const products = productDataService.getProducts();
+import ProductsData from '../services/ProductsData';
+const productsData = new ProductsData();
+
 
 const Profile: NextPage = () => {
 
   let initialProducts: Array<Product> = [];
+
   const [products, setProducts] = useState(initialProducts);
-  fetch('https://localhost:7086/api/products')
+
+  productsData.getProducts()
     .then(response => response.json())
     .then(data => {
       setProducts(data);
