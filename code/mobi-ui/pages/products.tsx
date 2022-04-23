@@ -1,10 +1,20 @@
 import type { NextPage } from 'next';
 import { Product } from '../models/Product';
-import ProductsData from '../services/ProductsData';
-const productDataService = new ProductsData();
-const products = productDataService.getProducts();
+import { useState } from 'react'; //set initial state for the page, re-render the page 
+// import ProductsData from '../services/ProductsData';
+// const productDataService = new ProductsData();
+// const products = productDataService.getProducts();
 
 const Profile: NextPage = () => {
+
+  let initialProducts: Array<Product> = [];
+  const [products, setProducts] = useState(initialProducts);
+  fetch('https://localhost:7086/api/products')
+    .then(response => response.json())
+    .then(data => {
+      setProducts(data);
+    });
+
   return (
     <div className="columns is-multiline">
       {products.map((product: Product, index) => (
@@ -21,11 +31,11 @@ const Profile: NextPage = () => {
             <div className="card-content">
               <div className="media">
                 <div className="media-content">
-                  <p className="title is-5">{product.Product}</p>
-                  <p className="subtitle is-6">$ {product.Price}</p>
+                  <p className="title is-5">{product.productName}</p>
+                  <p className="subtitle is-6">$ {product.productPrice}</p>
                 </div>
               </div>
-              <div className="content">{product.Description}</div>
+              <div className="content">{product.productDescription}</div>
             </div>
           </div>
         </div>
