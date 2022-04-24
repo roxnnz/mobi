@@ -1,17 +1,18 @@
-import ProductsMockData from '../mock/products.json';
-import { Product } from '../models/Product';
+import ProductAPIClient from '../api/ProductAPIClient';
 /**
  * @description ProductData is a class provice set and get products.
  * @export ProductData class
  * @class ProductsData
  */
 export default class ProductsData {
-  products: Array<Product>;
+
+  ProductAPIClient: ProductAPIClient;
+
   constructor() {
-    this.products = ProductsMockData;
+    this.ProductAPIClient = new ProductAPIClient();
   }
 
-  public getProducts(): Array<Product> {
-    return this.products;
+  public async getProducts(): Promise<Response> {
+    return this.ProductAPIClient.get();
   }
 }

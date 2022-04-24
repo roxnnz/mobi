@@ -5,5 +5,4 @@
 export interface IMobiAPIClient {
     headers: { 'Content-Type': string; };
     host: string;
-    fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
 }
