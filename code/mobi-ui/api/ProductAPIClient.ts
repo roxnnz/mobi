@@ -7,7 +7,7 @@ export default class ProductAPIClient extends APIClient {
     }
 
     public get(): Promise<Response> {
-        return this.fetch(`${this.host}/api/products`);
+        return fetch(`${this.host}/api/products`);
     }
 
     public post() {

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { Product } from '../models/Product';
-import { useState } from 'react'; //set initial state for the page, re-render the page 
+import { useEffect, useState } from 'react'; //set initial state for the page, re-render the page 
 import ProductsData from '../services/ProductsData';
 const productsData = new ProductsData();
 
@@ -11,11 +11,15 @@ const Profile: NextPage = () => {
 
   const [products, setProducts] = useState(initialProducts);
 
-  productsData.getProducts()
-    .then(response => response.json())
-    .then(data => {
-      setProducts(data);
-    });
+  useEffect(() => {
+    productsData.getProducts()
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setProducts(data);
+      });
+  }, []);
 
   return (
     <div className="columns is-multiline">
