@@ -49,6 +49,12 @@ using (var db = new MobiConsumerContext())
     
     db.Add(newProduct);
     db.SaveChanges();
+
+    var product = db.Products
+               .OrderBy(b => b.Id)
+               .First();
+
+    Console.WriteLine(product);
 }
 
 app.UseAuthorization();
