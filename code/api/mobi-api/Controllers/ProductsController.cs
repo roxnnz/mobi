@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using mobi_api.Repository;
 using mobi_api.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
