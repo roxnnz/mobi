@@ -24,10 +24,22 @@ namespace mobi_api.Controllers
         }
 
         // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{FirstName}")]
+        public ActionResult<User> GetUserByFirstName([FromRoute]String FirstName)
         {
-            return "value";
+            try
+            {
+                var result = userRepository.GetUserByFirstName(FirstName);
+
+                if (result == null) return NotFound();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
 
         // POST api/<UsersController>

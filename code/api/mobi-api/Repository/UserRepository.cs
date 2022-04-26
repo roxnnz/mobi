@@ -6,6 +6,7 @@ namespace mobi_api.Repository
     public interface IUserRepository
     {
         List<User> GetAllUsers();
+        User GetUserByFirstName(string FirstName);
     }
 
     public class UsersRepository : IUserRepository
@@ -15,7 +16,22 @@ namespace mobi_api.Repository
         {
 
         }
-
+        public User GetUserByFirstName(string FirstName)
+        {
+            try
+            {
+                using (var stream = new StreamReader("MockData/Users.json"))
+                {
+                    string jsonString = stream.ReadToEnd();
+                    List<User> users = JsonSerializer.Deserialize<List<User>>(jsonString);
+                    return users.Find(user => user.FirstName == FirstName);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public List<User> GetAllUsers()
         {
             return this.GetMockUsersFromJson();
