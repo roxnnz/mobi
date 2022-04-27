@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using mobi_api.Services;
 using mobi_api.DAO;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IStoreRepository, StoresRepository>();
 builder.Services.AddScoped<IProductRepository, ProductsRepository>();
+builder.Services.AddScoped<IUserRepository, UsersRepository>();
 
 var app = builder.Build();
 
