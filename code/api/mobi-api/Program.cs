@@ -43,19 +43,34 @@ app.UseCors(builder => builder
 using (var db = new MobiConsumerContext())
 {
     Console.WriteLine($"Database path: {db.DbPath}.");
+
+    var newStore = new StoreEntity();
+    newStore.StoreName = "Jimmy Noodle";
+    newStore.PhoneNumber = "201923033";
+    newStore.WebSite = "www.checkout.com";
+
+    db.Add(newStore);
+    db.SaveChanges();
+
+    var store = db.Stores
+                  .OrderBy(s => s.StoreId)
+                  .First();
+    Console.WriteLine(store);
+
+
     var newProduct = new ProductEntity();
-    newProduct.fee = 12;
     newProduct.Description = "First Prod";
     newProduct.Price = 12;
-    newProduct.Name = "Jimmy";
+    newProduct.StoreId = 2;
     
     db.Add(newProduct);
     db.SaveChanges();
 
     var product = db.Products
-               .OrderBy(b => b.Id)
+               .OrderBy(b => b.ProductId)
                .First();
 
+   
     Console.WriteLine(product);
 }
 

@@ -6,6 +6,8 @@ namespace mobi_api.Services
     public class MobiConsumerContext : DbContext
     {
         public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<StoreEntity> Stores { get; set; }
+
         public string DbPath { get; }
 
         public MobiConsumerContext()

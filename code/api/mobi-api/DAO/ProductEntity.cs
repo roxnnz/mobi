@@ -1,17 +1,14 @@
-﻿namespace mobi_api.DAO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace mobi_api.DAO
 {
     public class ProductEntity
     {
-        public Guid Id { get; set; }
-
-        public string? Name { get; set; }
-
+        [Key]
+        public Guid ProductId { get; set; }
+        public string? ProductName { get; set; }
         public string? Description { get; set; }
-
-        public string? Type { get; set; }
-
         public double? Price { get; set; }
-
-        public double? fee { get; set; }
+        public int StoreId { get; set; }
     }
 }
