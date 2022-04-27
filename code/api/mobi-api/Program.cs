@@ -1,5 +1,11 @@
 using FluentValidation.AspNetCore;
 using mobi_api.Repository;
+using mobi_api.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using mobi_api.Services;
+using mobi_api.DAO;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +38,26 @@ app.UseCors(builder => builder
                  .AllowAnyOrigin()
                  .AllowAnyHeader()
                  .AllowAnyMethod());
+
+// TODO: For testing purpose, move to correct places:
+using (var db = new MobiConsumerContext())
+{
+    Console.WriteLine($"Database path: {db.DbPath}.");
+    var newProduct = new ProductEntity();
+    newProduct.fee = 12;
+    newProduct.Description = "First Prod";
+    newProduct.Price = 12;
+    newProduct.Name = "Jimmy";
+    
+    db.Add(newProduct);
+    db.SaveChanges();
+
+    var product = db.Products
+               .OrderBy(b => b.Id)
+               .First();
+
+    Console.WriteLine(product);
+}
 
 app.UseAuthorization();
 
