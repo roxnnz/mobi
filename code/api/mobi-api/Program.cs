@@ -22,7 +22,7 @@ builder.Services.AddScoped<IDevelopmentData, DevelopmentData>();
 builder.Services.AddScoped<IStoreRepository, StoresRepository>();
 builder.Services.AddScoped<IProductRepository, ProductsRepository>();
 builder.Services.AddScoped<IUserRepository, UsersRepository>();
-
+builder.Services.AddSingleton<MobiConsumerContext>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>

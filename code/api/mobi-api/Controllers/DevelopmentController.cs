@@ -10,6 +10,7 @@ namespace mobi_api.Controllers
     public class DevelopmentController : ControllerBase
     {
         private readonly IDevelopmentData _developmentData;
+
         public DevelopmentController(IDevelopmentData DevelopmentData)
         {
             _developmentData = DevelopmentData;
@@ -27,6 +28,17 @@ namespace mobi_api.Controllers
         {
             var results = _developmentData.GenerateDevelopmentDataStores();
             return Ok(results);
+        }
+
+        [HttpDelete("clean/testdata/all")]
+        public ActionResult DeleteTestData()
+        {
+            var results = _developmentData.CleanDevelopmentData();
+
+            if(results)
+                return Ok();
+
+            return BadRequest();
         }
     }
 }
