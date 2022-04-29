@@ -11,7 +11,7 @@ using mobi_api.Services;
 namespace mobi_api.Migrations
 {
     [DbContext(typeof(MobiConsumerContext))]
-    [Migration("20220427092822_InitialCreate")]
+    [Migration("20220429070302_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,11 +34,11 @@ namespace mobi_api.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("StoreEntityStoreId")
+                    b.Property<Guid>("StoreEntityStoreId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ProductId");
 
@@ -62,7 +62,7 @@ namespace mobi_api.Migrations
                     b.Property<string>("StoreName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("WebSite")
+                    b.Property<string>("Website")
                         .HasColumnType("TEXT");
 
                     b.HasKey("StoreId");
@@ -72,9 +72,13 @@ namespace mobi_api.Migrations
 
             modelBuilder.Entity("mobi_api.DAO.ProductEntity", b =>
                 {
-                    b.HasOne("mobi_api.DAO.StoreEntity", null)
+                    b.HasOne("mobi_api.DAO.StoreEntity", "StoreEntity")
                         .WithMany("Products")
-                        .HasForeignKey("StoreEntityStoreId");
+                        .HasForeignKey("StoreEntityStoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreEntity");
                 });
 
             modelBuilder.Entity("mobi_api.DAO.StoreEntity", b =>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobi_api.DAO;
+using mobi_api.Services;
 
 namespace mobi_api.Controllers
 {
@@ -7,16 +9,24 @@ namespace mobi_api.Controllers
     [ApiController]
     public class DevelopmentController : ControllerBase
     {
-        public DevelopmentController()
+        private readonly IDevelopmentData _developmentData;
+        public DevelopmentController(IDevelopmentData DevelopmentData)
         {
-            // Constractor
+            _developmentData = DevelopmentData;
         }
 
-
-        [HttpPut("generate/testdata/all")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("generate/testdata/products")]
+        public ActionResult<List<StoreEntity>> PutProducts()
         {
-            Console.WriteLine(value);
+            var results = _developmentData.GenerateDevelopmentDataProducts();
+            return Ok(results);
+        }
+
+        [HttpPut("generate/testdata/stores")]
+        public ActionResult<List<StoreEntity>> PutStores()
+        {
+            var results = _developmentData.GenerateDevelopmentDataStores();
+            return Ok(results);
         }
     }
 }
