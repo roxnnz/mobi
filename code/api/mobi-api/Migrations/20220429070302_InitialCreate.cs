@@ -17,7 +17,7 @@ namespace mobi_api.Migrations
                     StoreName = table.Column<string>(type: "TEXT", nullable: true),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
                     Address = table.Column<string>(type: "TEXT", nullable: true),
-                    WebSite = table.Column<string>(type: "TEXT", nullable: true)
+                    Website = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,8 +32,8 @@ namespace mobi_api.Migrations
                     ProductName = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<double>(type: "REAL", nullable: true),
-                    StoreId = table.Column<int>(type: "INTEGER", nullable: false),
-                    StoreEntityStoreId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    StoreId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StoreEntityStoreId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,8 @@ namespace mobi_api.Migrations
                         name: "FK_Products_Stores_StoreEntityStoreId",
                         column: x => x.StoreEntityStoreId,
                         principalTable: "Stores",
-                        principalColumn: "StoreId");
+                        principalColumn: "StoreId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

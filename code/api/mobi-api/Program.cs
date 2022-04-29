@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using mobi_api.Services;
 using mobi_api.DAO;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,6 +22,12 @@ builder.Services.AddScoped<IDevelopmentData, DevelopmentData>();
 builder.Services.AddScoped<IStoreRepository, StoresRepository>();
 builder.Services.AddScoped<IProductRepository, ProductsRepository>();
 builder.Services.AddScoped<IUserRepository, UsersRepository>();
+
+
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 var app = builder.Build();
 

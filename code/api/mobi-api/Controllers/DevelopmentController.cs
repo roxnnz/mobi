@@ -12,23 +12,21 @@ namespace mobi_api.Controllers
         private readonly IDevelopmentData _developmentData;
         public DevelopmentController(IDevelopmentData DevelopmentData)
         {
-            // Constractor
             _developmentData = DevelopmentData;
         }
 
+        [HttpPut("generate/testdata/products")]
+        public ActionResult<List<StoreEntity>> PutProducts()
+        {
+            var results = _developmentData.GenerateDevelopmentDataProducts();
+            return Ok(results);
+        }
 
         [HttpPut("generate/testdata/stores")]
-        public ActionResult<List<StoreEntity>> Put(int id, [FromBody] string value)
+        public ActionResult<List<StoreEntity>> PutStores()
         {
-            
-            Console.WriteLine(value);
-            var results = _developmentData.GenereateDevelopmentData();
-            if(results == null)
-            {
-                return Ok(null);
-            }
+            var results = _developmentData.GenerateDevelopmentDataStores();
             return Ok(results);
-
         }
     }
 }
