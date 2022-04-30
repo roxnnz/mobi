@@ -1,37 +1,32 @@
 ﻿using mobi_api.Model;
-using System.Text.Json;
+using mobi_api.DAO;
+using mobi_api.Services;
 
 namespace mobi_api.Repository
 {
     public interface IStoreRepository
     {
-        List<Store> GetAllStores();
+        List<StoreEntity> GetAllStores();
     }
 
     public class StoresRepository : IStoreRepository
     {
-
-        public StoresRepository()
+        private readonly MobiConsumerContext _dbContext;
+        public StoresRepository(MobiConsumerContext mobiConsumerContext)
         {
-            
+            _dbContext = mobiConsumerContext;   
         }
 
-        public List<Store> GetAllStores()
+        public List<StoreEntity> GetAllStores()
         {
-            return this.GetMockStoresFromJson();
+            return this.GetMockStoresFromDB();
         }
 
-        private List<Store> GetMockStoresFromJson()
+        private List<StoreEntity> GetMockStoresFromDB()
         {
             try
             {
-                using (var stream = new StreamReader("MockData/Stores.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<Store> stores = JsonSerializer.Deserialize<List<Store>>(jsonString);
-
-                    return stores;
-                }
+                return _dbContext.Stores.ToList();
             }
             catch (IOException ioex)
             {
