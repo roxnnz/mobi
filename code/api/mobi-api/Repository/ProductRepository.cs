@@ -26,8 +26,9 @@ namespace mobi_api.Repository
 
         public List<ProductEntity> GetProductByStoreId(Guid StoreId)
         {
-            var productsForStore = new List<ProductEntity>();
-            productsForStore = _dbContext.Products.Find(Product => Product. == StoreId);
+            var store = _dbContext.Stores.Find(StoreId);
+            // _dbContext.Products.Where(p => p.StoreId == StoreId).ToList();
+            List<ProductEntity> productsForStore = store.Products;
             return productsForStore;
         }
 
