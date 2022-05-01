@@ -25,7 +25,7 @@ namespace mobi_api.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string get(int id)
+        public string get(Guid id)
         {
             return "value";
         }

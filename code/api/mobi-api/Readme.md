@@ -1,5 +1,6 @@
 ### Initial DB test env
 Run:
+`dotnet tool install --global dotnet-ef`
 `dotnet ef migrations add InitialCreate`
 and 
 `dotnet ef database update`
