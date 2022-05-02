@@ -7,14 +7,22 @@ namespace mobi_api.Repository
     public interface IStoreRepository
     {
         List<StoreEntity> GetAllStores();
+        StoreEntity GetStoreByStoreId(Guid StoreId);
     }
 
     public class StoresRepository : IStoreRepository
     {
+
         private readonly MobiConsumerContext _dbContext;
-        public StoresRepository(MobiConsumerContext mobiConsumerContext)
+
+        public StoresRepository()
+        {     
+
+        }
+        
+        public StoresRepository(MobiConsumerContext mobiConsumerContext) 
         {
-            _dbContext = mobiConsumerContext;   
+            _dbContext = mobiConsumerContext;
         }
 
         public List<StoreEntity> GetAllStores()
@@ -28,9 +36,22 @@ namespace mobi_api.Repository
             {
                 return _dbContext.Stores.ToList();
             }
-            catch (IOException ioex)
+            catch (Exception ex)
             {
-                throw new Exception(ioex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+        
+        public StoreEntity? GetStoreByStoreId(Guid StoreId)
+        {
+            try
+            {
+                return _dbContext.Stores.Where(Store => Store.StoreId.Equals(StoreId))
+                        .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
