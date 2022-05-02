@@ -13,15 +13,18 @@ namespace mobi_api.Repository
     public class StoresRepository : IStoreRepository
     {
 
+        private readonly MobiConsumerContext _dbContext;
+
         public StoresRepository()
         {     
 
         }
-        private readonly MobiConsumerContext _dbContext;
+        
         public StoresRepository(MobiConsumerContext mobiConsumerContext) 
         {
             _dbContext = mobiConsumerContext;
         }
+
         public List<StoreEntity> GetAllStores()
         {
             return this.GetMockStoresFromDB();
@@ -38,6 +41,7 @@ namespace mobi_api.Repository
                 throw new Exception(ex.Message);
             }
         }
+        
         public StoreEntity? GetStoreByStoreId(Guid StoreId)
         {
             try

@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-namespace mobi_api.Model
+﻿namespace mobi_api.Model
 {
     public class Store
     {
