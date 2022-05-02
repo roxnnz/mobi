@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mobi_api.Model;
+using mobi_api.DAO;
 using mobi_api.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,16 +20,28 @@ namespace mobi_api.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public List<Store> Get()
+        public ActionResult<List<StoreEntity>> Get()
         {
-            return this.storeRepository.GetAllStores();
+            return Ok(this.storeRepository.GetAllStores());
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{StoreId}")]
+        public ActionResult<StoreEntity> GetStoreByStoreId([FromRoute] Guid StoreId)
         {
-            return "value";
+            try
+            {
+                var result = storeRepository.GetStoreByStoreId(StoreId);
+
+                if (result == null) return NotFound();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
 
         // POST api/<ValuesController>

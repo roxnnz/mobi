@@ -1,41 +1,53 @@
 ﻿using mobi_api.Model;
-using System.Text.Json;
+using mobi_api.DAO;
+using mobi_api.Services;
 
 namespace mobi_api.Repository
 {
     public interface IStoreRepository
     {
-        List<Store> GetAllStores();
+        List<StoreEntity> GetAllStores();
+        StoreEntity GetStoreByStoreId(Guid StoreId);
     }
 
     public class StoresRepository : IStoreRepository
     {
 
         public StoresRepository()
+        {     
+
+        }
+        private readonly MobiConsumerContext _dbContext;
+        public StoresRepository(MobiConsumerContext mobiConsumerContext) 
         {
-            
+            _dbContext = mobiConsumerContext;
+        }
+        public List<StoreEntity> GetAllStores()
+        {
+            return this.GetMockStoresFromDB();
         }
 
-        public List<Store> GetAllStores()
-        {
-            return this.GetMockStoresFromJson();
-        }
-
-        private List<Store> GetMockStoresFromJson()
+        private List<StoreEntity> GetMockStoresFromDB()
         {
             try
             {
-                using (var stream = new StreamReader("MockData/Stores.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<Store> stores = JsonSerializer.Deserialize<List<Store>>(jsonString);
-
-                    return stores;
-                }
+                return _dbContext.Stores.ToList();
             }
-            catch (IOException ioex)
+            catch (Exception ex)
             {
-                throw new Exception(ioex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+        public StoreEntity? GetStoreByStoreId(Guid StoreId)
+        {
+            try
+            {
+                return _dbContext.Stores.Where(Store => Store.StoreId.Equals(StoreId))
+                        .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
