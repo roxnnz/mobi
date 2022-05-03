@@ -7,6 +7,7 @@ namespace mobi_api.Services
     {
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<StoreEntity> Stores { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         public string DbPath { get; }
 

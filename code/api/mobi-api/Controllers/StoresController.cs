@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using mobi_api.Model;
 using mobi_api.DAO;
 using mobi_api.Repository;
 

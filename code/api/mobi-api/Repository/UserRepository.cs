@@ -1,57 +1,70 @@
 using mobi_api.Model;
-using System.Text.Json;
+using mobi_api.DAO;
+using mobi_api.Services;
 
 namespace mobi_api.Repository
 {
     public interface IUserRepository
     {
-        List<User> GetAllUsers();
-        User GetUserByFirstName(string FirstName);
+        List<UserEntity> GetAllUsers();
+        UserEntity GetUserByFirstName(String FirstName);
+        UserEntity GetUserByUserId(Guid StoreId);
     }
 
-    public class UsersRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
 
-        public UsersRepository()
+        private readonly MobiConsumerContext _dbContext;
+
+        public UserRepository()
         {
 
         }
-        public User GetUserByFirstName(string FirstName)
+        
+        public UserRepository(MobiConsumerContext mobiConsumerContext)
+        {
+            _dbContext = mobiConsumerContext;
+        }
+        public List<UserEntity> GetAllUsers()
+        {
+            return this.GetMockStoresFromDB();
+        }
+
+        private List<UserEntity> GetMockStoresFromDB()
         {
             try
             {
-                using (var stream = new StreamReader("MockData/Users.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<User> users = JsonSerializer.Deserialize<List<User>>(jsonString);
-                    return users.Find(user => user.FirstName == FirstName);
-                }
+                return _dbContext.Users.ToList();
             }
             catch (Exception ex)
             {
-                return null;
+                throw new Exception(ex.Message);
             }
         }
-        public List<User> GetAllUsers()
-        {
-            return this.GetMockUsersFromJson();
-        }
 
-        private List<User> GetMockUsersFromJson()
+        public UserEntity? GetUserByFirstName(string FirstName)
         {
             try
             {
-                using (var stream = new StreamReader("MockData/Users.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<User> users= JsonSerializer.Deserialize<List<User>>(jsonString);
-
-                    return users;
-                }
+                return _dbContext.Users.Where(User => User.FirstName.Equals(FirstName))
+                        .FirstOrDefault();
             }
-            catch (IOException ioex)
+            catch (Exception ex)
             {
-                throw new Exception(ioex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public UserEntity? GetUserByUserId(Guid UserId)
+        {
+            try
+            {
+                return _dbContext.Users.Where(User => User.UserId.Equals(UserId))
+                        .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
