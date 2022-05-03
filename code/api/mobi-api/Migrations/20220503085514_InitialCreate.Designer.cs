@@ -11,7 +11,7 @@ using mobi_api.Services;
 namespace mobi_api.Migrations
 {
     [DbContext(typeof(MobiConsumerContext))]
-    [Migration("20220429070302_InitialCreate")]
+    [Migration("20220503085514_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,29 @@ namespace mobi_api.Migrations
                     b.HasKey("StoreId");
 
                     b.ToTable("Stores");
+                });
+
+            modelBuilder.Entity("mobi_api.DAO.UserEntity", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("mobi_api.DAO.ProductEntity", b =>

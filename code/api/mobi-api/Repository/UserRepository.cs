@@ -27,10 +27,10 @@ namespace mobi_api.Repository
         }
         public List<UserEntity> GetAllUsers()
         {
-            return this.GetMockStoresFromDB();
+            return this.GetAllUsersFromDB();
         }
 
-        private List<UserEntity> GetMockStoresFromDB()
+        private List<UserEntity> GetAllUsersFromDB()
         {
             try
             {

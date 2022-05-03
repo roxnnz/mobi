@@ -16,6 +16,14 @@ namespace mobi_api.Controllers
             _developmentData = DevelopmentData;
         }
 
+        [HttpPut("generate/testdata/users")]
+        public ActionResult<List<UserEntity>> PutUsers()
+        {
+            var results = _developmentData.GenerateDevelopmentDataUsers();
+            return Ok(results);
+        }
+
+
         [HttpPut("generate/testdata/products")]
         public ActionResult<List<StoreEntity>> PutProducts()
         {

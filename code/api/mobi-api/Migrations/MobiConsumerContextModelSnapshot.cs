@@ -68,6 +68,29 @@ namespace mobi_api.Migrations
                     b.ToTable("Stores");
                 });
 
+            modelBuilder.Entity("mobi_api.DAO.UserEntity", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("mobi_api.DAO.ProductEntity", b =>
                 {
                     b.HasOne("mobi_api.DAO.StoreEntity", "StoreEntity")

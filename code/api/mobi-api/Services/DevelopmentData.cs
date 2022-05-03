@@ -6,6 +6,7 @@ namespace mobi_api.Services
     public interface IDevelopmentData
     {
         bool CleanDevelopmentData();
+        List<UserEntity> GenerateDevelopmentDataUsers();
         List<StoreEntity> GenerateDevelopmentDataProducts();
         List<StoreEntity> GenerateDevelopmentDataStores();
     }
@@ -24,6 +25,7 @@ namespace mobi_api.Services
             {
                 _dbContext.Stores.RemoveRange(_dbContext.Stores);
                 _dbContext.Products.RemoveRange(_dbContext.Products);
+                _dbContext.Users.RemoveRange(_dbContext.Users);
                 _dbContext.SaveChanges();
 
                 return true;
@@ -32,6 +34,25 @@ namespace mobi_api.Services
                 return false;
             }
             
+        }
+
+        public List<UserEntity> GenerateDevelopmentDataUsers()
+        {
+            try
+            {
+                var stream = new StreamReader("MockData/Users.json");
+                string jsonStringUsers = stream.ReadToEnd();
+                List<UserEntity> Users = JsonSerializer.Deserialize<List<UserEntity>>(jsonStringUsers);
+
+                _dbContext.AddRange(Users);
+                _dbContext.SaveChanges();
+
+                return _dbContext.Users.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public List<StoreEntity> GenerateDevelopmentDataProducts()
