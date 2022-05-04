@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mobi_api.Repository;
 using mobi_api.Model;
+using mobi_api.DAO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,24 +11,24 @@ namespace mobi_api.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IProductRepository productRepository;
+        private IProductRepository _productRepository;
 
         public ProductsController(IProductRepository ProductRepository)
         {
-            this.productRepository = ProductRepository;
+            _productRepository = ProductRepository;
         }
 
         [HttpGet]
         public List<Product> Get()
         {
-            return this.productRepository.GetAllProducts();
+            return _productRepository.GetAllProducts();
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string get(int id)
+        public ActionResult<List<ProductEntity>> get(Guid id)
         {
-            return "value";
+            return Ok(_productRepository.GetProductByStoreId(id));
         }
 
         // POST api/<ProductsController>
