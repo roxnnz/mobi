@@ -53,7 +53,6 @@ const Login: NextPage = () => {
     <div>
       <Head>
         <title>Mobi - login</title>
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"></link>
       </Head>
       <main>
         <section className="hero">
