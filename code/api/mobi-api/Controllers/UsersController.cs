@@ -24,24 +24,6 @@ namespace mobi_api.Controllers
             return Ok(this.userRepository.GetAllUsers());
         }
 
-        // GET api/<UsersController>/5
-        [HttpGet("{FirstName}")]
-        public ActionResult<UserEntity> GetUserByFirstName([FromRoute] String FirstName)
-        {
-            try
-            {
-                var result = userRepository.GetUserByFirstName(FirstName);
-
-                if (result == null) return NotFound();
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
-            }
-        }
         [HttpGet("{UserId}")]
         public ActionResult<UserEntity> GetUserByUserId([FromRoute] Guid UserId)
         {
@@ -67,10 +49,13 @@ namespace mobi_api.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Update(Guid UserId, UserEntity UserDetail)
         {
+            userRepository.UpdateUser(UserId, UserDetail);
+            return Ok(new { message = "User updated" });
         }
+
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]

@@ -7,8 +7,8 @@ namespace mobi_api.Repository
     public interface IUserRepository
     {
         List<UserEntity> GetAllUsers();
-        UserEntity GetUserByFirstName(String FirstName);
         UserEntity GetUserByUserId(Guid StoreId);
+        UserEntity UpdateUser(Guid UserId, UserEntity UserDetail);
     }
 
     public class UserRepository : IUserRepository
@@ -42,19 +42,6 @@ namespace mobi_api.Repository
             }
         }
 
-        public UserEntity? GetUserByFirstName(string FirstName)
-        {
-            try
-            {
-                return _dbContext.Users.Where(User => User.FirstName.Equals(FirstName))
-                        .FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
         public UserEntity? GetUserByUserId(Guid UserId)
         {
             try
@@ -66,6 +53,19 @@ namespace mobi_api.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public UserEntity UpdateUser(Guid UserId, UserEntity UserDetail)
+        {
+            var TargetUser = _dbContext.Users.SingleOrDefault(User => User.UserId.Equals(UserId));
+            if (TargetUser == null) return null;
+            TargetUser.FirstName = UserDetail.FirstName;
+            TargetUser.LastName = UserDetail.LastName;
+            TargetUser.Email = UserDetail.Email;
+            TargetUser.Phone = UserDetail.Phone;
+
+            _dbContext.SaveChanges();
+            return TargetUser;       
         }
     }
 }
