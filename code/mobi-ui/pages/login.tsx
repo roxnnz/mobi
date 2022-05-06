@@ -6,7 +6,7 @@ const LoginWithGoogleButton = () => {
     <div id="gSignInWrapper">
       <div id="customBtn" className="customGPlusSignIn">
         <span className="icon"></span>
-        <span onClick={() => console.log('here')} className="buttonText">Google</span>
+        <span onClick={() => window.location.href = "https://localhost:7086/api/auth/login"} className="buttonText">Google</span>
       </div>
       <style jsx>{`
         #customBtn {
