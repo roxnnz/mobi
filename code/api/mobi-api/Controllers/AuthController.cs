@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using mobi_api.Model;
 using mobi_api.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,11 +34,9 @@ namespace mobi_api.Controllers
         public async Task<IActionResult> Get([FromQuery] string Code)
         {
 
-            var idToken = await _GoogleAuthSupport.GetIdToken(Code);
-            Console.WriteLine(idToken);
+            GoogleAuthResponse response = await _GoogleAuthSupport.GetIdToken(Code);
 
-            // TODO: impment token exchange. 
-            var AccessToken = idToken;
+            var AccessToken = response.IdToken;
 
             // TODO: Mobi user management 
             // 1. find user? 
