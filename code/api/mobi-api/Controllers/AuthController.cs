@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using mobi_api.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +9,11 @@ namespace mobi_api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IGoogleAuthSupport _GoogleAuthSupport;
+        public AuthController(IGoogleAuthSupport googleAuthSupport)
+        {
+            _GoogleAuthSupport = googleAuthSupport;
+        }
         // GET: api/<AuthController>
         [HttpGet("login")]
         public IActionResult Get()
@@ -16,7 +22,7 @@ namespace mobi_api.Controllers
             var client_id = "687715750173-q94u8v476nojdrtpjql08uqebsisuoda.apps.googleusercontent.com";
             var callback_url = "https%3A//localhost:7086/api/callback"; // change to /api/auth/callback
             var state = "state_parameter_passthrough_value"; // implement state value (url path triggred)
-            var scope = "https%3A//www.googleapis.com/auth/drive.file"; // change scope to identity only
+            var scope = "email"; // change scope to identity only
 
             var url = $"{google_login_host}?client_id={client_id}&response_type=code&state={state}&scope={scope}&redirect_uri={callback_url}&prompt=consent&include_granted_scopes=true";
 
@@ -24,12 +30,19 @@ namespace mobi_api.Controllers
         }
 
         [HttpGet("/api/callback")]
-        public IActionResult Get([FromQuery] string Code)
+        public async Task<IActionResult> Get([FromQuery] string Code)
         {
-            Console.WriteLine(Code);
+
+            var idToken = await _GoogleAuthSupport.GetIdToken(Code);
+            Console.WriteLine(idToken);
 
             // TODO: impment token exchange. 
-            var AccessToken = Code;
+            var AccessToken = idToken;
+
+            // TODO: Mobi user management 
+            // 1. find user? 
+            //    true, last login time,
+            //    false, create user using the Email found from IDTOKEN
 
             var website_host = "http://localhost:3000/";
             var url = $"{website_host}?accessToken={AccessToken}";
@@ -42,6 +55,7 @@ namespace mobi_api.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+
         }
 
         // PUT api/<AuthController>/5
