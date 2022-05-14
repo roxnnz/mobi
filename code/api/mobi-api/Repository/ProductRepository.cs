@@ -8,8 +8,9 @@ namespace mobi_api.Repository
 {
     public interface IProductRepository
     {
-        List<Product> GetAllProducts();
+        List<ProductEntity> GetAllProducts();
         List<ProductEntity> GetProductByStoreId(Guid StoreId);
+        ProductEntity AddProductForStore(Guid StoreId, Product Product);
     }
     public class ProductsRepository : IProductRepository
     {
@@ -19,9 +20,9 @@ namespace mobi_api.Repository
             _dbContext = mobiConsumerContext;
         }
 
-        public List<Product> GetAllProducts()
+        public List<ProductEntity> GetAllProducts()
         {
-            return this.GetMockProductFromJson();
+            return _dbContext.Products.ToList();
         }
 
         public List<ProductEntity> GetProductByStoreId(Guid StoreId)
@@ -31,21 +32,20 @@ namespace mobi_api.Repository
             return productsByStore;
         }
 
-        private List<Product> GetMockProductFromJson()
+        public ProductEntity AddProductForStore(Guid StoreId, Product Product)
         {
-            try
+            var store = _dbContext.Stores.Find(StoreId);
+            var newProduct = new ProductEntity()
             {
-                using(var stream = new StreamReader("MockData/Products.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<Product> products = JsonSerializer.Deserialize<List<Product>>(jsonString);
-                    return products;
-                }
-            }
-            catch (IOException ioex)
-            {
-                throw new Exception(ioex.Message);
-            }
+                Price = Product.Price,
+                Description = Product.Description,
+                ProductName = Product.ProductName
+            };
+
+            store.Products.Add(newProduct);
+            _dbContext.SaveChanges();
+
+            return newProduct;
         }
     }
 }

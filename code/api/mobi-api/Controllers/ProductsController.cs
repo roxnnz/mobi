@@ -19,7 +19,7 @@ namespace mobi_api.Controllers
         }
 
         [HttpGet]
-        public List<Product> Get()
+        public List<ProductEntity> Get()
         {
             return _productRepository.GetAllProducts();
         }
@@ -38,9 +38,11 @@ namespace mobi_api.Controllers
         }
 
         // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{StoreId}")]
+        public ActionResult<ProductEntity> Put([FromRoute] Guid StoreId, [FromBody] Product Product)
         {
+            var newProduct = _productRepository.AddProductForStore(StoreId, Product);
+            return newProduct;
         }
 
         // DELETE api/<ProductsController>/5
