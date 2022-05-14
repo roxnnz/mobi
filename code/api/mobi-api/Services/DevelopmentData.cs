@@ -49,7 +49,7 @@ namespace mobi_api.Services
                 {
                     products.ForEach(product =>
                     {
-                        store.Products.Add(new ProductEntity { ProductName = product.ProductName, Description = product.Description, Price = product.Price, StoreId = store.StoreId });
+                        store.Products.Add(new ProductEntity { ProductName = product.ProductName, Description = product.Description, Price = product.Price, Store = store});
                     });
 
                 });
