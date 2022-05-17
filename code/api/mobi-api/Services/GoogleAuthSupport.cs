@@ -45,7 +45,7 @@ namespace mobi_api.Services
 
             var UrlParams = new Dictionary<string, string>{
                 { "client_id", "687715750173-q94u8v476nojdrtpjql08uqebsisuoda.apps.googleusercontent.com" },
-                { "client_secret", "emHvKmKkB0UdiWBCCOLp499J" },
+                { "client_secret", "" },
                 { "grant_type", "authorization_code" },
                 { "redirect_uri", "https://localhost:7086/api/callback" },
                 { "code", Code}
