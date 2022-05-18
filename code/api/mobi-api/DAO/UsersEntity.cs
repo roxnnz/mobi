@@ -8,8 +8,6 @@ namespace mobi_api.DAO
         public Guid UserId { get; set; }
         public string? Name { get; set; }
         public DateTime Created { get; set; }
-        
-        [Required]
         public string Email { get; set; }
     }
 }
