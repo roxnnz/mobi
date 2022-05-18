@@ -7,11 +7,11 @@ namespace mobi_api.Repository
 {
     public interface IUserRepository
     {
-        List<User> GetAllUsers();
-        User GetUserByFirstName(string FirstName);
+        List<UsersEntity> GetAllUsers();
+        UsersEntity GetUserByFirstName(string FirstName);
         bool IsUserExists(string Email);
-
         void InitUser(string Email);
+        UsersEntity UpdateUserByUserId(Guid UserId, UpdateUserRequest User);
     }
 
     public class UsersRepository : IUserRepository
@@ -21,6 +21,20 @@ namespace mobi_api.Repository
         public UsersRepository(MobiConsumerContext mobiConsumerContext)
         {
             _dbContext = mobiConsumerContext;
+        }
+
+        public UsersEntity UpdateUserByUserId(Guid UserId, UpdateUserRequest User)
+        {
+
+            var _user = _dbContext.Users.SingleOrDefault(x => x.UserId.Equals(UserId));
+            
+            if (_user != null)
+            {
+                _user.Name = User.Name;
+                _dbContext.SaveChanges();
+            }
+
+            return _user;
         }
 
         public void InitUser(string Email)
@@ -41,43 +55,13 @@ namespace mobi_api.Repository
            return _dbContext.Users.Where(u => u.Email.Equals(Email)).Any();
         }
 
-        public User GetUserByFirstName(string FirstName)
+        public UsersEntity GetUserByFirstName(string FirstName)
         {
-            try
-            {
-                using (var stream = new StreamReader("MockData/Users.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<User> users = JsonSerializer.Deserialize<List<User>>(jsonString);
-                    return users.Find(user => user.FirstName == FirstName);
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return new UsersEntity();
         }
-        public List<User> GetAllUsers()
+        public List<UsersEntity> GetAllUsers()
         {
-            return this.GetMockUsersFromJson();
-        }
-
-        private List<User> GetMockUsersFromJson()
-        {
-            try
-            {
-                using (var stream = new StreamReader("MockData/Users.json"))
-                {
-                    string jsonString = stream.ReadToEnd();
-                    List<User> users= JsonSerializer.Deserialize<List<User>>(jsonString);
-
-                    return users;
-                }
-            }
-            catch (IOException ioex)
-            {
-                throw new Exception(ioex.Message);
-            }
+            return _dbContext.Users.ToList();
         }
     }
 }

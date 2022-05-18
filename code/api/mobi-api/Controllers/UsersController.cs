@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using mobi_api.Repository;
+using mobi_api.DAO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,18 +10,18 @@ namespace mobi_api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserRepository userRepository;
+        private IUserRepository _userRepository;
 
         public UsersController(IUserRepository UsersRepository)
         {
-            this.userRepository = UsersRepository;
+            _userRepository = UsersRepository;
         }
 
         // GET: api/<UsersController>
         [HttpGet]
-        public List<User> Get()
+        public ActionResult<List<UsersEntity>> Get()
         {
-            return this.userRepository.GetAllUsers();
+            return Ok(_userRepository.GetAllUsers());
         }
 
         // GET api/<UsersController>/5
@@ -29,7 +30,7 @@ namespace mobi_api.Controllers
         {
             try
             {
-                var result = userRepository.GetUserByFirstName(FirstName);
+                var result = _userRepository.GetUserByFirstName(FirstName);
 
                 if (result == null) return NotFound();
 
@@ -49,9 +50,14 @@ namespace mobi_api.Controllers
         }
 
         // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{UserId}")]
+        public ActionResult<UsersEntity> Put(Guid UserId, [FromBody] User User)
         {
+            if(UserId == null)
+                throw new ArgumentNullException("userId");
+
+            var _user = _userRepository.UpdateUserByUserId(UserId, User);
+            return Ok(_user);
         }
 
         // DELETE api/<UsersController>/5
