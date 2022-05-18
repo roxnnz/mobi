@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mobi_api.Model;
 using mobi_api.Services;
+using mobi_api.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace mobi_api.Controllers
 {
     [Route("api/[controller]")]
@@ -11,9 +11,13 @@ namespace mobi_api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IGoogleAuthSupport _GoogleAuthSupport;
-        public AuthController(IGoogleAuthSupport googleAuthSupport)
+        private readonly IUserRepository _UsersRepository;
+        private readonly IJwtService _JwtService;
+        public AuthController(IGoogleAuthSupport googleAuthSupport, IUserRepository usersRepository, IJwtService JwtService)
         {
             _GoogleAuthSupport = googleAuthSupport;
+            _UsersRepository = usersRepository;
+            _JwtService = JwtService;
         }
         // GET: api/<AuthController>
         [HttpGet("login")]
@@ -35,16 +39,17 @@ namespace mobi_api.Controllers
         {
 
             GoogleAuthResponse response = await _GoogleAuthSupport.GetIdToken(Code);
+            var GoogleIdToken = _JwtService.ParseIdToken(response.IdToken);
+            var isUserExist = _UsersRepository.IsUserExists(GoogleIdToken.Email);
 
-            var AccessToken = response.IdToken;
-
-            // TODO: Mobi user management 
-            // 1. find user? 
-            //    true, last login time,
-            //    false, create user using the Email found from IDTOKEN
+            if (!isUserExist)
+            {
+                // Create user
+                _UsersRepository.InitUser(GoogleIdToken.Email);
+            }
 
             var website_host = "http://localhost:3000/";
-            var url = $"{website_host}?accessToken={AccessToken}";
+            var url = $"{website_host}?idToken={response.IdToken}";
 
             return Redirect(url);
 

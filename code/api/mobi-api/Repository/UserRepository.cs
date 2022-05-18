@@ -1,5 +1,7 @@
 using mobi_api.Model;
 using System.Text.Json;
+using mobi_api.Services;
+using mobi_api.DAO;
 
 namespace mobi_api.Repository
 {
@@ -7,15 +9,38 @@ namespace mobi_api.Repository
     {
         List<User> GetAllUsers();
         User GetUserByFirstName(string FirstName);
+        bool IsUserExists(string Email);
+
+        void InitUser(string Email);
     }
 
     public class UsersRepository : IUserRepository
     {
+        private readonly MobiConsumerContext _dbContext;
 
-        public UsersRepository()
+        public UsersRepository(MobiConsumerContext mobiConsumerContext)
         {
-
+            _dbContext = mobiConsumerContext;
         }
+
+        public void InitUser(string Email)
+        {
+            var user = new UsersEntity()
+            {
+                Name = "",
+                Email = Email,
+                Created = DateTime.Now,
+            };
+
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+        }
+
+        public bool IsUserExists(string Email)
+        {
+           return _dbContext.Users.Where(u => u.Email.Equals(Email)).Any();
+        }
+
         public User GetUserByFirstName(string FirstName)
         {
             try

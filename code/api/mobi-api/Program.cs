@@ -23,6 +23,7 @@ builder.Services.AddScoped<IStoreRepository, StoresRepository>();
 builder.Services.AddScoped<IProductRepository, ProductsRepository>();
 builder.Services.AddScoped<IUserRepository, UsersRepository>();
 builder.Services.AddScoped<IGoogleAuthSupport, GoogleAuthSupport>();
+builder.Services.AddScoped<IJwtService, JwtServices>();
 builder.Services.AddSingleton<MobiConsumerContext>();
 
 builder.Services.AddControllersWithViews()
