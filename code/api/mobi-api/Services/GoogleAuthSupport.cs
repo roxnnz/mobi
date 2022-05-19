@@ -12,9 +12,10 @@ namespace mobi_api.Services
 
     public class GoogleAuthSupport : IGoogleAuthSupport
     {
-        public GoogleAuthSupport()
+        private readonly IConfigProvider _configProvider;
+        public GoogleAuthSupport(IConfigProvider configProvider)
         {
-
+            _configProvider = configProvider;
         }
 
         public async Task<GoogleAuthResponse> GetIdToken(string Code)
@@ -44,10 +45,10 @@ namespace mobi_api.Services
             var req = new HttpRequestMessage(HttpMethod.Post, "/oauth2/v4/token");
 
             var UrlParams = new Dictionary<string, string>{
-                { "client_id", "687715750173-q94u8v476nojdrtpjql08uqebsisuoda.apps.googleusercontent.com" },
-                { "client_secret", "" },
+                { "client_id", _configProvider.GoogleAuthClientId() },
+                { "client_secret", _configProvider.GoogleAuthClientSecret() },
                 { "grant_type", "authorization_code" },
-                { "redirect_uri", "https://localhost:7086/api/callback" },
+                { "redirect_uri", _configProvider.GoogleAuthClientRedirectUrl() },
                 { "code", Code}
             };
 
