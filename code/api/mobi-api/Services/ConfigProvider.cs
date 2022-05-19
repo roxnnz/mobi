@@ -24,6 +24,12 @@
 
         public GoogleConfigs GetGoogleConfig()
         {
+            // TODO: not sure this exceptoin works as expected. No unit testing.
+            if(Configuration["Auth:Google"] == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             return new GoogleConfigs()
             {
                 ClientId = Configuration["Auth:Google:ClientId"],
