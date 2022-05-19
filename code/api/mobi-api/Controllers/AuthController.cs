@@ -30,10 +30,10 @@ namespace mobi_api.Controllers
         public IActionResult Get()
         {
             var google_login_host = "https://accounts.google.com/o/oauth2/v2/auth";
-            var client_id = _ConfigProvider.GoogleAuthClientId();
-            var callback_url = _ConfigProvider.GoogleAuthClientCallBackUrl(); // change to /api/auth/callback
+            var client_id = _ConfigProvider.GetGoogleConfig().ClientId;
+            var callback_url = _ConfigProvider.GetGoogleConfig().CallBackUrl; // change to /api/auth/callback
             var state = "state_parameter_passthrough_value"; // implement state value (url path triggred)
-            var scope = _ConfigProvider.GoogleAuthScope();
+            var scope = _ConfigProvider.GetGoogleConfig().Scope;
 
             var url = $"{google_login_host}?client_id={client_id}&response_type=code&state={state}&scope={scope}&redirect_uri={callback_url}&prompt=consent&include_granted_scopes=true";
 

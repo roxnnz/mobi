@@ -45,10 +45,10 @@ namespace mobi_api.Services
             var req = new HttpRequestMessage(HttpMethod.Post, "/oauth2/v4/token");
 
             var UrlParams = new Dictionary<string, string>{
-                { "client_id", _configProvider.GoogleAuthClientId() },
-                { "client_secret", _configProvider.GoogleAuthClientSecret() },
+                { "client_id", _configProvider.GetGoogleConfig().ClientId },
+                { "client_secret", _configProvider.GetGoogleConfig().ClientSecret },
                 { "grant_type", "authorization_code" },
-                { "redirect_uri", _configProvider.GoogleAuthClientRedirectUrl() },
+                { "redirect_uri", _configProvider.GetGoogleConfig().RedirectUrl },
                 { "code", Code}
             };
 
