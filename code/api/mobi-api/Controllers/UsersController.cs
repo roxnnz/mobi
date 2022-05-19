@@ -26,7 +26,7 @@ namespace mobi_api.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{FirstName}")]
-        public ActionResult<User> GetUserByFirstName([FromRoute]String FirstName)
+        public ActionResult<UsersEntity> GetUserByFirstName([FromRoute]String FirstName)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace mobi_api.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{UserId}")]
-        public ActionResult<UsersEntity> Put(Guid UserId, [FromBody] User User)
+        public ActionResult<UsersEntity> Put(Guid UserId, [FromBody] UpdateUserRequest User)
         {
             if(UserId == null)
                 throw new ArgumentNullException("userId");

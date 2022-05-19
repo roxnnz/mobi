@@ -49,7 +49,10 @@ namespace mobi_api.Services
                 { "grant_type", "authorization_code" },
                 { "redirect_uri", "https://localhost:7086/api/callback" },
                 { "code", Code}
-            }; 
+            };
+
+            if(UrlParams["client_secret"] == String.Empty)
+                throw new ArgumentNullException("client_secret");
 
             req.Content = new FormUrlEncodedContent(UrlParams);
 

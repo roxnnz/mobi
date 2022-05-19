@@ -22,6 +22,9 @@ namespace mobi_api.Services
 
         public GoogleIdToken ParseIdToken(string idToken)
         {
+            if(idToken == null)
+                throw new ArgumentNullException(nameof(idToken));
+
             IJsonSerializer serializer = new JsonNetSerializer();
             IDateTimeProvider provider = new UtcDateTimeProvider();
             IJwtValidator validator = new JwtValidator(serializer, provider);
