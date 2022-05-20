@@ -1,10 +1,6 @@
 using FluentValidation.AspNetCore;
 using mobi_api.Repository;
-using mobi_api.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using mobi_api.Services;
-using mobi_api.DAO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +14,7 @@ builder.Services.AddMvc().AddFluentValidation(config =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IConfigProvider, ConfigProvider>();
 builder.Services.AddScoped<IDevelopmentData, DevelopmentData>();
 builder.Services.AddScoped<IStoreRepository, StoresRepository>();
 builder.Services.AddScoped<IProductRepository, ProductsRepository>();

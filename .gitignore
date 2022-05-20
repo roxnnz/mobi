@@ -2,3 +2,4 @@
 .vscode
 bin
 code/api/**/obj
+appsettings.json

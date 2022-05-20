@@ -13,21 +13,27 @@ namespace mobi_api.Controllers
         private readonly IGoogleAuthSupport _GoogleAuthSupport;
         private readonly IUserRepository _UsersRepository;
         private readonly IJwtService _JwtService;
-        public AuthController(IGoogleAuthSupport googleAuthSupport, IUserRepository usersRepository, IJwtService JwtService)
+        private readonly IConfigProvider _ConfigProvider;
+
+        public AuthController(IGoogleAuthSupport googleAuthSupport, 
+            IUserRepository usersRepository, 
+            IJwtService JwtService, 
+            IConfigProvider ConfigProvider)
         {
             _GoogleAuthSupport = googleAuthSupport;
             _UsersRepository = usersRepository;
             _JwtService = JwtService;
+            _ConfigProvider = ConfigProvider;
         }
         // GET: api/<AuthController>
         [HttpGet("login")]
         public IActionResult Get()
         {
             var google_login_host = "https://accounts.google.com/o/oauth2/v2/auth";
-            var client_id = "687715750173-q94u8v476nojdrtpjql08uqebsisuoda.apps.googleusercontent.com";
-            var callback_url = "https%3A//localhost:7086/api/callback"; // change to /api/auth/callback
+            var client_id = _ConfigProvider.GetGoogleConfig().ClientId;
+            var callback_url = _ConfigProvider.GetGoogleConfig().CallBackUrl; // change to /api/auth/callback
             var state = "state_parameter_passthrough_value"; // implement state value (url path triggred)
-            var scope = "email"; // change scope to identity only
+            var scope = _ConfigProvider.GetGoogleConfig().Scope;
 
             var url = $"{google_login_host}?client_id={client_id}&response_type=code&state={state}&scope={scope}&redirect_uri={callback_url}&prompt=consent&include_granted_scopes=true";
 
