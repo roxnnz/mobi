@@ -39,7 +39,7 @@ namespace mobi_api.Controllers
 
         // PUT api/<ProductsController>/5
         [HttpPut("{StoreId}")]
-        public ActionResult<ProductEntity> Put([FromRoute] Guid StoreId, [FromBody] Product Product)
+        public ActionResult<ProductEntity> Put([FromRoute] Guid StoreId, [FromBody] ProductResponse Product)
         {
             var newProduct = _productRepository.AddProductForStore(StoreId, Product);
             return newProduct;
