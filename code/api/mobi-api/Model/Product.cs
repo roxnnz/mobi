@@ -1,5 +1,6 @@
 ﻿namespace mobi_api.Model
 {
+    // Product base model used for import json mock data, keep it for now.
     public class Product
     {
         public string ProductName { get; set; } = "No product name found";

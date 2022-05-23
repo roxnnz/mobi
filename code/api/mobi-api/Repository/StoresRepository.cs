@@ -8,21 +8,38 @@ namespace mobi_api.Repository
     {
         List<StoreEntity> GetAllStores();
         StoreEntity GetStoreByStoreId(Guid StoreId);
+        StoreResponse CreateStore(StoreRequest StoreRequset);
     }
 
     public class StoresRepository : IStoreRepository
     {
 
         private readonly MobiConsumerContext _dbContext;
-
-        public StoresRepository()
-        {     
-
-        }
         
         public StoresRepository(MobiConsumerContext mobiConsumerContext) 
         {
             _dbContext = mobiConsumerContext;
+        }
+
+        public StoreResponse CreateStore(StoreRequest StoreRequset)
+        {
+            var newStore = new StoreEntity();
+
+            newStore.Address = StoreRequset.Address;
+            newStore.PhoneNumber = StoreRequset.PhoneNumber;
+            newStore.StoreName = StoreRequset.StoreName;
+            newStore.Website = StoreRequset.Website;
+
+            _dbContext.Stores.Add(newStore);
+            _dbContext.SaveChanges();
+
+            return new StoreResponse()
+            {
+                StoreName = newStore.StoreName,
+                Website = newStore.Website,
+                Address = newStore.Address,
+                PhoneNumber = newStore.PhoneNumber,
+            };
         }
 
         public List<StoreEntity> GetAllStores()

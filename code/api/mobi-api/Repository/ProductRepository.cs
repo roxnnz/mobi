@@ -10,7 +10,7 @@ namespace mobi_api.Repository
     {
         List<ProductEntity> GetAllProducts();
         List<ProductEntity> GetProductByStoreId(Guid StoreId);
-        ProductEntity AddProductForStore(Guid StoreId, Product Product);
+        ProductResponse AddProductForStore(Guid StoreId, Product Product);
     }
     public class ProductsRepository : IProductRepository
     {
@@ -32,8 +32,9 @@ namespace mobi_api.Repository
             return productsByStore;
         }
 
-        public ProductEntity AddProductForStore(Guid StoreId, Product Product)
+        public ProductResponse AddProductForStore(Guid StoreId, Product Product)
         {
+
             var store = _dbContext.Stores.Find(StoreId);
             var newProduct = new ProductEntity()
             {
@@ -45,7 +46,14 @@ namespace mobi_api.Repository
             store.Products.Add(newProduct);
             _dbContext.SaveChanges();
 
-            return newProduct;
+            var productResponse = new ProductResponse()
+            {
+                ProductName = newProduct.ProductName,
+                Description = newProduct.Description,
+                Price = newProduct.Price,
+            };
+
+            return productResponse;
         }
     }
 }

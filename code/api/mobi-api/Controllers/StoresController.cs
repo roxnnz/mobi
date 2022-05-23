@@ -11,18 +11,18 @@ namespace mobi_api.Controllers
     [ApiController]
     public class StoresController : ControllerBase
     {
-        private IStoreRepository storeRepository;
+        private IStoreRepository _storeRepository;
 
         public StoresController(IStoreRepository StoresRepository)
         {
-            this.storeRepository = StoresRepository;
+            _storeRepository = StoresRepository;
         }
 
         // GET: api/<ValuesController>
         [HttpGet]
         public ActionResult<List<StoreEntity>> Get()
         {
-            return Ok(this.storeRepository.GetAllStores());
+            return Ok(_storeRepository.GetAllStores());
         }
 
         // GET api/<ValuesController>/5
@@ -31,7 +31,7 @@ namespace mobi_api.Controllers
         {
             try
             {
-                var result = storeRepository.GetStoreByStoreId(StoreId);
+                var result = _storeRepository.GetStoreByStoreId(StoreId);
 
                 if (result == null) return NotFound();
 
@@ -46,8 +46,10 @@ namespace mobi_api.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<StoreResponse> Post([FromBody] StoreRequest StoreRequest)
         {
+
+            return Ok();
         }
 
         // PUT api/<ValuesController>/5
