@@ -45,6 +45,14 @@ namespace mobi_api.Controllers
             return newProduct;
         }
 
+        [HttpPatch("{ProductId}")]
+        public ActionResult<ProductResponse> Patch([FromRoute] Guid ProductId, [FromBody] ProductRequest productRequest)
+        {
+            var updatedProduct = _productRepository.UpdateProductByProductId(ProductId, productRequest);
+            if (updatedProduct == null) return NotFound();
+            return Ok(updatedProduct);
+        }
+
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
         public void delete(int id)

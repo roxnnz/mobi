@@ -76,7 +76,8 @@ namespace mobi_api.Repository
         public StoreResponse? UpdateStoreByStoreId(Guid storeId, StoreRequest storeRequest)
         {
             var store = _dbContext.Stores.FirstOrDefault(x => x.StoreId.Equals(storeId));
-            if (store == null) return null;
+            if (store == null) 
+                return null;
             if(storeRequest.StoreName != null)             
                 store.StoreName = storeRequest.StoreName;           
             
