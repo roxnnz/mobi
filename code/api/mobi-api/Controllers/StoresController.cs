@@ -48,14 +48,22 @@ namespace mobi_api.Controllers
         [HttpPost]
         public ActionResult<StoreResponse> Post([FromBody] StoreRequest StoreRequest)
         {
-
-            return Ok();
+            var storeResponse = _storeRepository.CreateStore(StoreRequest);            
+            return Ok(storeResponse);
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+        }
+
+        [HttpPatch("{StoreId}")]
+        public ActionResult<StoreResponse> Patch([FromRoute]Guid StoreId, [FromBody] StoreRequest StoreRequest)
+        {
+            var updatedStore = _storeRepository.UpdateStoreByStoreId(StoreId, StoreRequest);
+            if(updatedStore == null) return NotFound();
+            return Ok(updatedStore);
         }
 
         // DELETE api/<ValuesController>/5

@@ -9,6 +9,7 @@ namespace mobi_api.Repository
         List<StoreEntity> GetAllStores();
         StoreEntity GetStoreByStoreId(Guid StoreId);
         StoreResponse CreateStore(StoreRequest StoreRequset);
+        StoreResponse UpdateStoreByStoreId(Guid StoreId, StoreRequest storeRequest);
     }
 
     public class StoresRepository : IStoreRepository
@@ -70,6 +71,33 @@ namespace mobi_api.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public StoreResponse? UpdateStoreByStoreId(Guid storeId, StoreRequest storeRequest)
+        {
+            var store = _dbContext.Stores.FirstOrDefault(x => x.StoreId.Equals(storeId));
+            if (store == null) return null;
+            if(storeRequest.StoreName != null)             
+                store.StoreName = storeRequest.StoreName;           
+            
+            if(storeRequest.PhoneNumber != null)            
+                store.PhoneNumber = storeRequest.PhoneNumber;            
+
+            if(storeRequest.Address != null)            
+                store.Address = storeRequest.Address;            
+                
+            if(storeRequest.Website != null)
+                store.Website = storeRequest.Website;                        
+            
+            _dbContext.SaveChanges();
+             
+            return new StoreResponse()
+            {
+                StoreName = store.StoreName,
+                PhoneNumber = store.PhoneNumber,
+                Address = store.Address,
+                Website = store.Website,
+            };
         }
     }
 }
