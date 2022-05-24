@@ -59,7 +59,7 @@ namespace mobi_api.Controllers
         }
 
         [HttpPatch("{StoreId}")]
-        public ActionResult<StoreResponse> Patch([FromRoute]Guid StoreId, [FromBody] StoreRequest StoreRequest)
+        public ActionResult<StoreResponse> Patch([FromRoute] Guid StoreId, [FromBody] StoreRequest StoreRequest)
         {
             var updatedStore = _storeRepository.UpdateStoreByStoreId(StoreId, StoreRequest);
             if(updatedStore == null) return NotFound();
