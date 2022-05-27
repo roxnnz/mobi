@@ -9,7 +9,7 @@ class StoreAPIClient extends MobiAPIClient implements IStoreAPIClient {
 
     async getById(id: string) {
         try {
-            const response = await this.fetch(`${this.host}/api/stores/${id}`)
+            const response = await fetch(`${this.host}/api/stores/${id}`)
             const data = response.json()
             return data
         } catch (error) {
@@ -17,9 +17,9 @@ class StoreAPIClient extends MobiAPIClient implements IStoreAPIClient {
         }
     }
 
-    async get() {
+    public async get() {
         try {
-            const response = await this.fetch(`${this.host}/api/stores`)
+            const response = await fetch(`${this.host}/api/stores`)
             const data = response.json()
             return data
         } catch (error) {
@@ -34,7 +34,7 @@ class StoreAPIClient extends MobiAPIClient implements IStoreAPIClient {
             body: JSON.stringify(data),
         }
         try {
-            const response = await this.fetch(`${this.host}/api/stores`, conf)
+            const response = await fetch(`${this.host}/api/stores`, conf)
             const data = response.json()
             return data;
         } catch (error) {

@@ -1,4 +1,6 @@
 import ProductAPIClient from '../api/ProductAPIClient';
+import { Product } from '../models/Product';
+
 /**
  * @description ProductData is a class provice set and get products.
  * @export ProductData class
@@ -12,7 +14,7 @@ export default class ProductsData {
     this.ProductAPIClient = new ProductAPIClient();
   }
 
-  public async getProducts(): Promise<Response> {
-    return this.ProductAPIClient.get();
+  public async getProducts(): Promise<Array<Product>> {
+    return await this.ProductAPIClient.get();
   }
 }

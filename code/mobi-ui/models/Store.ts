@@ -1,8 +1,8 @@
 // https://www.typescriptlang.org/docs/handbook/2/objects.html
 
 export type Store = {
-  Store: string;
-  PhoneNumber: string;
-  Website: string;
-  Address: string;
+  storeName: string;
+  phoneNumber: string;
+  website: string;
+  address: string;
 };

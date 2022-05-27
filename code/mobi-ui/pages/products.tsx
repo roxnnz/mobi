@@ -8,18 +8,10 @@ const productsData = new ProductsData();
 const Profile: NextPage = () => {
 
   let initialProducts: Array<Product> = [];
-
   const [products, setProducts] = useState(initialProducts);
-
   useEffect(() => {
-    productsData.getProducts()
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setProducts(data);
-      });
-  }, []);
+    productsData.getProducts().then(res => setProducts(res))
+  }, [])
 
   return (
     <div className="columns is-multiline">
