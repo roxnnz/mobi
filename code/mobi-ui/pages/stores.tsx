@@ -1,10 +1,19 @@
 import type { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 import { Store } from '../models/Store';
 import StoresData from '../services/StoresData';
 const storeDatasService = new StoresData();
-const stores = storeDatasService.getAllStores();
 
 const Stores: NextPage = () => {
+
+  const initStores: Array<Store> = [];
+  const [stores, setStores] = useState(initStores);
+
+  useEffect(() => {
+    storeDatasService.getAllStores()
+      .then(res => setStores(res))
+  }, [])
+
   return (
     <div className="columns is-multiline">
       {stores.map((stores: Store, index) => (
@@ -21,14 +30,17 @@ const Stores: NextPage = () => {
             <div className="card-content">
               <div className="media">
                 <div className="media-content">
-                  <p className="title is-5">{stores.Store}</p>
-                  <p className="subtitle is-6"> {stores.PhoneNumber}</p>
+                  <p className="title is-5">{stores.storeName}</p>
+                  <p className="subtitle is-6"> {stores.phoneNumber}</p>
                 </div>
               </div>
-              <div className="content">
-                <a href={stores.Website}>Website</a>
-              </div>
-              <div className="content">{stores.Address}</div>
+
+              {stores.website != "N/A" ?
+                <div className="content">
+                  <a href={stores.website}>{stores.website}</a>
+                </div> : null}
+
+              <div className="content">{stores.address}</div>
             </div>
           </div>
         </div>

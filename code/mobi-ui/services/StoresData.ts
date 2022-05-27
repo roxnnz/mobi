@@ -11,7 +11,7 @@ export default class StoresData {
     this.storeAPIClient = new StoreAPIClient()
   }
 
-  public getAllStores(): Promise<Array<Store>> {
-    return this.storeAPIClient.get();
+  public async getAllStores(): Promise<Array<Store>> {
+    return await this.storeAPIClient.get();
   }
 }

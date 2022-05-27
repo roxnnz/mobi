@@ -1,4 +1,5 @@
 import APIClient from "./APIClient";
+import { Product } from '../models/Product';
 
 export default class ProductAPIClient extends APIClient {
 
@@ -6,8 +7,14 @@ export default class ProductAPIClient extends APIClient {
         super();
     }
 
-    public get(): Promise<Response> {
-        return fetch(`${this.host}/api/products`);
+    public async get() {
+        try {
+            const response = await fetch(`${this.host}/api/products`);
+            const data = response.json();
+            return data;
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     public post() {
