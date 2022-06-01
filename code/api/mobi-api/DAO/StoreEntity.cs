@@ -10,6 +10,6 @@ namespace mobi_api.DAO
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
         public string? Website { get; set; }
-        public List<ProductEntity>? Products { get; set; } = new List<ProductEntity>();
+        public List<ProductEntity> Products { get; set; } = new List<ProductEntity>();
     }
 }
