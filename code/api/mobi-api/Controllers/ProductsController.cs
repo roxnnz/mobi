@@ -2,6 +2,7 @@
 using mobi_api.Repository;
 using mobi_api.Model;
 using mobi_api.DAO;
+using mobi_api.Dtos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,9 +20,10 @@ namespace mobi_api.Controllers
         }
 
         [HttpGet]
-        public List<ProductEntity> Get()
+        public IEnumerable<ProductDto> Get()
         {
-            return _productRepository.GetAllProducts();
+            var products = _productRepository.GetAllProducts().Select(ProductEntity => ProductEntity.EProductDto());
+            return products;
         }
 
         // GET api/<ValuesController>/5
