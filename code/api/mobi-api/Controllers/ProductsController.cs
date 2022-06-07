@@ -3,6 +3,7 @@ using mobi_api.Repository;
 using mobi_api.Model;
 using mobi_api.DAO;
 using mobi_api.Dtos;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,17 +21,30 @@ namespace mobi_api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        public ActionResult<ProductDto> Get()
         {
-            var products = _productRepository.GetAllProducts().Select(ProductEntity => ProductEntity.EProductDto());
-            return products;
+            var products = _productRepository.GetAllProducts();
+            return Ok(products);
         }
 
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public ActionResult<List<ProductEntity>> get(Guid id)
+        [HttpGet("api/{storeId}")]
+        public ActionResult<List<ProductDto>> get(Guid storeId)
         {
-            return Ok(_productRepository.GetProductByStoreId(id));
+            try
+            {
+                var products = _productRepository.GetProductsByStoreId(storeId);
+
+                if (products == null)
+                {
+                    return NotFound();
+                }
+                return Ok(products);
+            }
+
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Incorrect StoreId");
+            }
         }
 
         // POST api/<ProductsController>
