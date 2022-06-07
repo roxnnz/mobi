@@ -21,10 +21,10 @@ namespace mobi_api.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<StoreDto> Get()
+        public ActionResult<StoreDto> Get()
         {
-            var stores = _storeRepository.GetAllStores().Select(StoreEntity => StoreEntity.EStoreDto());
-            return stores;
+            var stores = _storeRepository.GetAllStores();
+            return Ok(stores);
             //return Ok(_storeRepository.GetAllStores());
         }
 

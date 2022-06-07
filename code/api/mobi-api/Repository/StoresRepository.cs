@@ -1,12 +1,13 @@
 ﻿using mobi_api.Model;
 using mobi_api.DAO;
 using mobi_api.Services;
+using mobi_api.Dtos;
 
 namespace mobi_api.Repository
 {
     public interface IStoreRepository
     {
-        List<StoreEntity> GetAllStores();
+        IEnumerable<StoreDto> GetAllStores();
         StoreEntity GetStoreByStoreId(Guid StoreId);
         StoreResponse CreateStore(StoreRequest StoreRequset);
         StoreResponse UpdateStoreByStoreId(Guid StoreId, StoreRequest storeRequest);
@@ -43,9 +44,9 @@ namespace mobi_api.Repository
             };
         }
 
-        public List<StoreEntity> GetAllStores()
+        public IEnumerable<StoreDto> GetAllStores()
         {
-            return this.GetMockStoresFromDB();
+            return _dbContext.Stores.Select(stores => stores.EStoreDto());
         }
 
         private List<StoreEntity> GetMockStoresFromDB()
