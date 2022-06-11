@@ -9,7 +9,7 @@ namespace mobi_api.Repository
     {
         IEnumerable<ProductDto> GetAllProducts();
         IQueryable<ProductDto> GetProductsByStoreId(Guid storeId);
-        ProductResponse AddProductForStore(Guid StoreId, Product Product);
+        ProductDto AddProductByStoreId(Guid storeId, ProductEntity newProduct);
         ProductResponse UpdateProductByProductId(Guid StoreId, ProductRequest product);
     }
     public class ProductsRepository : IProductRepository
@@ -29,42 +29,39 @@ namespace mobi_api.Repository
 
         public IQueryable<ProductDto> GetProductsByStoreId(Guid storeId)
         {
-            try
+            var result = _dbContext.Products.Where(Product => Product.Store.StoreId == storeId);
+
+            if (result == null) { return null; }
+
+            else
             {
-                var result = _dbContext.Products.Where(Product => Product.Store.StoreId == storeId);
                 IQueryable<ProductDto> productDtos = result.Select(products => products.EProductDto());
                 return productDtos;
             }
-
-            catch(Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-
         }
 
-        public ProductResponse AddProductForStore(Guid StoreId, Product Product)
+        public ProductDto AddProductByStoreId(Guid storeId, ProductEntity newProduct)
         {
+            var store = _dbContext.Stores.Find(storeId);
 
-            var store = _dbContext.Stores.Find(StoreId);
-            var newProduct = new ProductEntity()
+            if (store == null) { return null; }
+
+            else
             {
-                Price = Product.Price,
-                Description = Product.Description,
-                ProductName = Product.ProductName
-            };
+                var addProduct = new ProductDto()
+                {
+                    ProductId = newProduct.ProductId,
+                    ProductName = newProduct.ProductName,
+                    Description = newProduct.Description,
+                    Price = newProduct.Price
+                };
 
-            store.Products.Add(newProduct);
-            _dbContext.SaveChanges();
+                store.Products.Add(newProduct);
 
-            var productResponse = new ProductResponse()
-            {
-                ProductName = newProduct.ProductName,
-                Description = newProduct.Description,
-                Price = newProduct.Price,
-            };
+                _dbContext.SaveChanges();
 
-            return productResponse;
+                return addProduct;
+            }
         }
 
         public ProductResponse? UpdateProductByProductId(Guid productId, ProductRequest productRequest)

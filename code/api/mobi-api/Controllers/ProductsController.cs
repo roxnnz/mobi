@@ -21,27 +21,25 @@ namespace mobi_api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ProductDto> Get()
+        public ActionResult<ProductDto> GetAllProducts()
         {
             var products = _productRepository.GetAllProducts();
             return Ok(products);
         }
 
-        [HttpGet("api/{storeId}")]
-        public ActionResult<List<ProductDto>> get(Guid storeId)
+        [HttpGet("api/{storeId}")]        
+        public ActionResult<List<ProductDto>> GetProductsByStoreId(Guid storeId)
         {
             try
             {
                 var products = _productRepository.GetProductsByStoreId(storeId);
 
-                if (products == null)
-                {
-                    return NotFound();
-                }
-                return Ok(products);
+                if (products == null) {return NotFound();}
+
+                else {return Ok(products);}                
             }
 
-            catch(Exception)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Incorrect StoreId");
             }
@@ -54,19 +52,30 @@ namespace mobi_api.Controllers
         }
 
         // PUT api/<ProductsController>/5
-        [HttpPut("{StoreId}")]
-        public ActionResult<ProductResponse> Put([FromRoute] Guid StoreId, [FromBody] Product Product)
+        [HttpPut("{storeId}")]
+        public ActionResult<ProductDto> PutProductByStoreId([FromRoute] Guid storeId, [FromBody] CreateProductDto createProductDto)
         {
-            var newProduct = _productRepository.AddProductForStore(StoreId, Product);
-            return newProduct;
-        }
+            try
+            {
+                ProductEntity newProduct = new()
+                {
+                    ProductName = createProductDto.ProductName,
+                    Description = createProductDto.Description,
+                    Price = createProductDto.Price
+                };
 
-        [HttpPatch("{ProductId}")]
-        public ActionResult<ProductResponse> Patch([FromRoute] Guid ProductId, [FromBody] ProductRequest productRequest)
-        {
-            var updatedProduct = _productRepository.UpdateProductByProductId(ProductId, productRequest);
-            if (updatedProduct == null) return NotFound();
-            return Ok(updatedProduct);
+                ProductDto result = _productRepository.AddProductByStoreId(storeId, newProduct);
+
+                if (result == null) { return NotFound(); }
+                else
+                {
+                    return Created("GetProductsByStoreId", newProduct.EProductDto());
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         // DELETE api/<ProductsController>/5
