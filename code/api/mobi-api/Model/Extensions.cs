@@ -31,7 +31,7 @@ namespace mobi_api.Model
             {
                 StoreId = storeEntity.StoreId,
                 StoreName = storeEntity.StoreName,
-                StorePhoneNumber = storeEntity.PhoneNumber,
+                PhoneNumber = storeEntity.PhoneNumber,
                 Address = storeEntity.Address,
                 Website = storeEntity.Website,
             };
