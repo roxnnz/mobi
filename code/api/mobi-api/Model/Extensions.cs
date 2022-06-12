@@ -5,6 +5,15 @@ namespace mobi_api.Model
 {
     public static class Extensions
     {
+        public static UserDto EUserDto(this UsersEntity userEntity)
+        {
+            return new UserDto
+            {
+                UserId = userEntity.UserId,
+                Name = userEntity.Name,
+                Email = userEntity.Email,
+            };
+        }
         public static ProductDto EProductDto(this ProductEntity productEntity)
         {
             return new ProductDto

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using mobi_api.Repository;
 using mobi_api.DAO;
+using mobi_api.Dtos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,12 +26,12 @@ namespace mobi_api.Controllers
         }
 
         // GET api/<UsersController>/5
-        [HttpGet("{FirstName}")]
-        public ActionResult<UsersEntity> GetUserByFirstName([FromRoute]String FirstName)
+        [HttpGet("{UserId}")]
+        public ActionResult<UserDto> GetUserByFirstName([FromRoute]Guid UserId)
         {
             try
             {
-                var result = _userRepository.GetUserByFirstName(FirstName);
+                var result = _userRepository.GetUserByUserId(UserId);
 
                 if (result == null) return NotFound();
 

@@ -1,4 +1,3 @@
-import UsersMockData from '../mock/users.json';
 import { User } from '../models/User';
 /**
  * @description ProductData is a class provice set and get products.
@@ -8,7 +7,7 @@ import { User } from '../models/User';
 export default class UsersData {
   users: Array<User>;
   constructor() {
-    this.users = UsersMockData;
+    this.users = [];
   }
 
   public getUserByLastName(lastName: string): User | undefined {

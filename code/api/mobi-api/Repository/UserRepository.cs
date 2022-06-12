@@ -2,13 +2,14 @@ using mobi_api.Model;
 using System.Text.Json;
 using mobi_api.Services;
 using mobi_api.DAO;
+using mobi_api.Dtos;
 
 namespace mobi_api.Repository
 {
     public interface IUserRepository
     {
         List<UsersEntity> GetAllUsers();
-        UsersEntity GetUserByFirstName(string FirstName);
+        UserDto GetUserByUserId(Guid UserId);
         bool IsUserExists(string Email);
         void InitUser(string Email);
         UsersEntity UpdateUserByUserId(Guid UserId, UpdateUserRequest User);
@@ -55,9 +56,13 @@ namespace mobi_api.Repository
            return _dbContext.Users.Where(u => u.Email.Equals(Email)).Any();
         }
 
-        public UsersEntity GetUserByFirstName(string FirstName)
+        public UserDto GetUserByUserId(Guid UserId)
         {
-            return new UsersEntity();
+            var user = _dbContext.Users.Find(UserId);
+            if(user != null)
+                return user.EUserDto();
+
+            return null;
         }
         public List<UsersEntity> GetAllUsers()
         {
