@@ -8,8 +8,8 @@ namespace mobi_api.Repository
     public interface IStoreRepository
     {
         IEnumerable<StoreDto> GetAllStores();
-        StoreEntity GetStoreByStoreId(Guid StoreId);
-        StoreResponse CreateStore(StoreRequest StoreRequset);
+        IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId);
+        void CreateStore(StoreEntity newStore);
         StoreResponse UpdateStoreByStoreId(Guid StoreId, StoreRequest storeRequest);
     }
 
@@ -17,31 +17,10 @@ namespace mobi_api.Repository
     {
 
         private readonly MobiConsumerContext _dbContext;
-        
-        public StoresRepository(MobiConsumerContext mobiConsumerContext) 
+
+        public StoresRepository(MobiConsumerContext mobiConsumerContext)
         {
             _dbContext = mobiConsumerContext;
-        }
-
-        public StoreResponse CreateStore(StoreRequest StoreRequset)
-        {
-            var newStore = new StoreEntity();
-
-            newStore.Address = StoreRequset.Address;
-            newStore.PhoneNumber = StoreRequset.PhoneNumber;
-            newStore.StoreName = StoreRequset.StoreName;
-            newStore.Website = StoreRequset.Website;
-
-            _dbContext.Stores.Add(newStore);
-            _dbContext.SaveChanges();
-
-            return new StoreResponse()
-            {
-                StoreName = newStore.StoreName,
-                Website = newStore.Website,
-                Address = newStore.Address,
-                PhoneNumber = newStore.PhoneNumber,
-            };
         }
 
         public IEnumerable<StoreDto> GetAllStores()
@@ -60,39 +39,41 @@ namespace mobi_api.Repository
                 throw new Exception(ex.Message);
             }
         }
-        
-        public StoreEntity? GetStoreByStoreId(Guid StoreId)
+
+        public IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId)
         {
-            try
+            var result = _dbContext.Stores.Where(s => s.StoreId == StoreId);
+
+            if (result == null) return null;
+
+            else
             {
-                return _dbContext.Stores.Where(Store => Store.StoreId.Equals(StoreId))
-                        .FirstOrDefault();
+                IQueryable<StoreDto> storeDtos = result.Select(s => s.EStoreDto());
+                return storeDtos;
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+        }
+
+        public void CreateStore(StoreEntity newStore)
+        {
+            var store = _dbContext.Stores.Add(newStore);
+            _dbContext.SaveChanges();
         }
 
         public StoreResponse? UpdateStoreByStoreId(Guid storeId, StoreRequest storeRequest)
         {
             var store = _dbContext.Stores.FirstOrDefault(x => x.StoreId.Equals(storeId));
-            if (store == null) 
-                return null;
-            if(storeRequest.StoreName != null)             
-                store.StoreName = storeRequest.StoreName;           
-            
-            if(storeRequest.PhoneNumber != null)            
-                store.PhoneNumber = storeRequest.PhoneNumber;            
 
-            if(storeRequest.Address != null)            
-                store.Address = storeRequest.Address;            
-                
-            if(storeRequest.Website != null)
-                store.Website = storeRequest.Website;                        
-            
+            if (store == null) return null;
+            if (storeRequest.StoreName != null) store.StoreName = storeRequest.StoreName;
+
+            if (storeRequest.PhoneNumber != null) store.PhoneNumber = storeRequest.PhoneNumber;
+
+            if (storeRequest.Address != null) store.Address = storeRequest.Address;
+
+            if (storeRequest.Website != null) store.Website = storeRequest.Website;
+
             _dbContext.SaveChanges();
-             
+
             return new StoreResponse()
             {
                 StoreName = store.StoreName,

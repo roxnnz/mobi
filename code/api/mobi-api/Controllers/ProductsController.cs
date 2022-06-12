@@ -3,7 +3,6 @@ using mobi_api.Repository;
 using mobi_api.Model;
 using mobi_api.DAO;
 using mobi_api.Dtos;
-using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,16 +26,16 @@ namespace mobi_api.Controllers
             return Ok(products);
         }
 
-        [HttpGet("api/{storeId}")]        
+        [HttpGet("api/{storeId}")]
         public ActionResult<List<ProductDto>> GetProductsByStoreId(Guid storeId)
         {
             try
             {
                 var products = _productRepository.GetProductsByStoreId(storeId);
 
-                if (products == null) {return NotFound();}
+                if (products == null) return NotFound();
 
-                else {return Ok(products);}                
+                else return Ok(products);
             }
 
             catch (Exception)
@@ -66,12 +65,10 @@ namespace mobi_api.Controllers
 
                 ProductDto result = _productRepository.AddProductByStoreId(storeId, newProduct);
 
-                if (result == null) { return NotFound(); }
-                else
-                {
-                    return Created("GetProductsByStoreId", newProduct.EProductDto());
-                }
+                if (result == null) return NotFound();
+                else return Created("GetProductsByStoreId", newProduct.EProductDto());
             }
+
             catch (Exception e)
             {
                 throw new Exception(e.Message);

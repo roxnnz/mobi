@@ -24,6 +24,7 @@ namespace mobi_api.Repository
         public IEnumerable<ProductDto> GetAllProducts()
         {
             var result = _dbContext.Products.Select(products => products.EProductDto());
+
             return result;
         }
 
@@ -31,7 +32,7 @@ namespace mobi_api.Repository
         {
             var result = _dbContext.Products.Where(Product => Product.Store.StoreId == storeId);
 
-            if (result == null) { return null; }
+            if (result == null) return null;
 
             else
             {
@@ -44,7 +45,7 @@ namespace mobi_api.Repository
         {
             var store = _dbContext.Stores.Find(storeId);
 
-            if (store == null) { return null; }
+            if (store == null) return null;
 
             else
             {

@@ -21,24 +21,24 @@ namespace mobi_api.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public ActionResult<StoreDto> Get()
+        public ActionResult<StoreDto> GetAllStores()
         {
             var stores = _storeRepository.GetAllStores();
+
             return Ok(stores);
-            //return Ok(_storeRepository.GetAllStores());
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{StoreId}")]
-        public ActionResult<StoreEntity> GetStoreByStoreId([FromRoute] Guid StoreId)
+        [HttpGet("{storeId}")]
+        public ActionResult<List<StoreDto>> GetStoreByStoreId([FromRoute] Guid storeId)
         {
             try
             {
-                var result = _storeRepository.GetStoreByStoreId(StoreId);
+                var store = _storeRepository.GetStoreByStoreId(storeId);
 
-                if (result == null) return NotFound();
+                if (store == null) return NotFound();
 
-                return result;
+                else return Ok(store);
             }
             catch (Exception)
             {
@@ -49,10 +49,27 @@ namespace mobi_api.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public ActionResult<StoreResponse> Post([FromBody] StoreRequest StoreRequest)
+        public ActionResult PostNewStore([FromBody] CreateStoreDto createStoreDto)
         {
-            var storeResponse = _storeRepository.CreateStore(StoreRequest);            
-            return Ok(storeResponse);
+            try
+            {
+                StoreEntity newStore = new()
+                {
+                    StoreId = Guid.NewGuid(),
+                    StoreName = createStoreDto.StoreName,
+                    PhoneNumber = createStoreDto.PhoneNumber,
+                    Address = createStoreDto.Address,
+                    Website = createStoreDto.Website
+                };
+
+                _storeRepository.CreateStore(newStore);
+
+                return Created("GetStoreByStoreId", newStore.EStoreDto());
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         // PUT api/<ValuesController>/5
@@ -65,7 +82,7 @@ namespace mobi_api.Controllers
         public ActionResult<StoreResponse> Patch([FromRoute] Guid StoreId, [FromBody] StoreRequest StoreRequest)
         {
             var updatedStore = _storeRepository.UpdateStoreByStoreId(StoreId, StoreRequest);
-            if(updatedStore == null) return NotFound();
+            if (updatedStore == null) return NotFound();
             return Ok(updatedStore);
         }
 
