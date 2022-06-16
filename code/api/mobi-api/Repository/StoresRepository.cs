@@ -8,9 +8,9 @@ namespace mobi_api.Repository
     public interface IStoreRepository
     {
         IEnumerable<StoreDto> GetAllStores();
-        IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId);
+        StoreDto? GetStoreByStoreId(Guid StoreId);
         void CreateStore(StoreEntity newStore);
-        StoreResponse UpdateStoreByStoreId(Guid StoreId, StoreRequest storeRequest);
+        StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto);
     }
 
     public class StoresRepository : IStoreRepository
@@ -40,16 +40,15 @@ namespace mobi_api.Repository
             }
         }
 
-        public IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId)
+        public StoreDto? GetStoreByStoreId(Guid StoreId)
         {
-            var result = _dbContext.Stores.Where(s => s.StoreId == StoreId);
+            StoreEntity? result = _dbContext.Stores.FirstOrDefault(s => s.StoreId == StoreId);
 
             if (result == null) return null;
 
             else
             {
-                IQueryable<StoreDto> storeDtos = result.Select(s => s.EStoreDto());
-                return storeDtos;
+                return result.EStoreDto();
             }
         }
 
@@ -59,28 +58,32 @@ namespace mobi_api.Repository
             _dbContext.SaveChanges();
         }
 
-        public StoreResponse? UpdateStoreByStoreId(Guid storeId, StoreRequest storeRequest)
+        public StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto)
         {
-            var store = _dbContext.Stores.FirstOrDefault(x => x.StoreId.Equals(storeId));
+            var exStoreEntity = _dbContext.Stores.Find(storeId);
 
-            if (store == null) return null;
-            if (storeRequest.StoreName != null) store.StoreName = storeRequest.StoreName;
+            if (exStoreEntity == null) return null;
 
-            if (storeRequest.PhoneNumber != null) store.PhoneNumber = storeRequest.PhoneNumber;
-
-            if (storeRequest.Address != null) store.Address = storeRequest.Address;
-
-            if (storeRequest.Website != null) store.Website = storeRequest.Website;
-
-            _dbContext.SaveChanges();
-
-            return new StoreResponse()
+            else
             {
-                StoreName = store.StoreName,
-                PhoneNumber = store.PhoneNumber,
-                Address = store.Address,
-                Website = store.Website,
-            };
+                if (updateStoreDto.StoreName != null) exStoreEntity.StoreName = updateStoreDto.StoreName;
+
+                if (updateStoreDto.PhoneNumber != null) exStoreEntity.PhoneNumber = updateStoreDto.PhoneNumber;
+
+                if (updateStoreDto.Address != null) exStoreEntity.Address = updateStoreDto.Address;
+
+                if (updateStoreDto.Website != null) exStoreEntity.Website = updateStoreDto.Website;
+
+                _dbContext.SaveChanges();
+
+                return exStoreEntity.EStoreDto() with
+                {
+                    StoreName = exStoreEntity.StoreName,
+                    PhoneNumber = exStoreEntity.PhoneNumber,
+                    Address = exStoreEntity.Address,
+                    Website = exStoreEntity.Website,
+                };
+            }
         }
     }
 }

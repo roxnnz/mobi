@@ -30,7 +30,7 @@ namespace mobi_api.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{storeId}")]
-        public ActionResult<List<StoreDto>> GetStoreByStoreId([FromRoute] Guid storeId)
+        public ActionResult<StoreDto> GetStoreByStoreId([FromRoute] Guid storeId)
         {
             try
             {
@@ -40,6 +40,7 @@ namespace mobi_api.Controllers
 
                 else return Ok(store);
             }
+
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
@@ -78,12 +79,13 @@ namespace mobi_api.Controllers
         {
         }
 
-        [HttpPatch("{StoreId}")]
-        public ActionResult<StoreResponse> Patch([FromRoute] Guid StoreId, [FromBody] StoreRequest StoreRequest)
+        // update /Stores/
+        [HttpPatch("{storeId}")]
+        public ActionResult<StoreDto> PatchStoreByStoreId([FromRoute] Guid storeId, [FromBody] UpdateStoreDto updateStoreDto)
         {
-            var updatedStore = _storeRepository.UpdateStoreByStoreId(StoreId, StoreRequest);
-            if (updatedStore == null) return NotFound();
-            return Ok(updatedStore);
+            var updatStore = _storeRepository.UpdateStoreByStoreId(storeId, updateStoreDto);
+            if (updatStore == null) return NotFound();
+            return Ok(updatStore);
         }
 
         // DELETE api/<ValuesController>/5

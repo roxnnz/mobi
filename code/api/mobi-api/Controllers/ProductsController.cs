@@ -26,7 +26,7 @@ namespace mobi_api.Controllers
             return Ok(products);
         }
 
-        [HttpGet("api/{storeId}")]
+        [HttpGet("{storeId}")]
         public ActionResult<List<ProductDto>> GetProductsByStoreId(Guid storeId)
         {
             try
