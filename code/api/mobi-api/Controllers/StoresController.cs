@@ -80,11 +80,11 @@ namespace mobi_api.Controllers
 
         // update /Stores/
         [HttpPatch("{storeId}")]
-        public ActionResult PatchStoreByStoreId([FromRoute] Guid storeId, [FromBody] UpdateStoreDto updateStoreDto)
+        public ActionResult<StoreDto> PatchStoreByStoreId([FromRoute] Guid storeId, [FromBody] UpdateStoreDto updateStoreDto)
         {
             var updatStore = _storeRepository.UpdateStoreByStoreId(storeId, updateStoreDto);
             if (updatStore == null) return NotFound();
-            return NoContent();
+            return Ok(updatStore);
         }
 
         // DELETE api/<ValuesController>/5

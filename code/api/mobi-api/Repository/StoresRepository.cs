@@ -61,35 +61,30 @@ namespace mobi_api.Repository
 
         public StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto)
         {
-            var existingStore = _dbContext.Stores.Find(storeId);
+            var exStoreEntity = _dbContext.Stores.Find(storeId);
 
-            if (existingStore == null) return null;
+            if (exStoreEntity == null) return null;
 
             else
             {
-                var updatedStore = existingStore.EStoreDto() with
-                {
-                    StoreName = updateStoreDto.StoreName,
-                    PhoneNumber = updateStoreDto.PhoneNumber,
-                    Address = updateStoreDto.Address,
-                    Website = updateStoreDto.Website,
-                };
+                if (updateStoreDto.StoreName != null) exStoreEntity.StoreName = updateStoreDto.StoreName;
+
+                if (updateStoreDto.PhoneNumber != null) exStoreEntity.PhoneNumber = updateStoreDto.PhoneNumber;
+
+                if (updateStoreDto.Address != null) exStoreEntity.Address = updateStoreDto.Address;
+
+                if (updateStoreDto.Website != null) exStoreEntity.Website = updateStoreDto.Website;
 
                 _dbContext.SaveChanges();
 
-                return updatedStore;
+                return exStoreEntity.EStoreDto() with
+                {
+                    StoreName = exStoreEntity.StoreName,
+                    PhoneNumber = exStoreEntity.PhoneNumber,
+                    Address = exStoreEntity.Address,
+                    Website = exStoreEntity.Website,
+                };
             }
-
-            /*
-
-            if (store.StoreName != null) store.StoreName = updatedStore.StoreName;
-
-            if (store.PhoneNumber != null) store.PhoneNumber = updatedStore.PhoneNumber;
-
-            if (store.Address != null) store.Address = updatedStore.Address;
-
-            if (store.Website != null) store.Website = updatedStore.Website;*/
-
         }
     }
 }
