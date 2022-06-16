@@ -30,7 +30,7 @@ namespace mobi_api.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{storeId}")]
-        public ActionResult<List<StoreDto>> GetStoreByStoreId([FromRoute] Guid storeId)
+        public ActionResult<StoreDto> GetStoreByStoreId([FromRoute] Guid storeId)
         {
             try
             {
@@ -40,6 +40,7 @@ namespace mobi_api.Controllers
 
                 else return Ok(store);
             }
+
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,

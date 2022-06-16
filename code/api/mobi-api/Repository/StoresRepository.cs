@@ -8,7 +8,7 @@ namespace mobi_api.Repository
     public interface IStoreRepository
     {
         IEnumerable<StoreDto> GetAllStores();
-        IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId);
+        StoreDto? GetStoreByStoreId(Guid StoreId);
         void CreateStore(StoreEntity newStore);
         StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto);
     }
@@ -40,16 +40,15 @@ namespace mobi_api.Repository
             }
         }
 
-        public IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId)
+        public StoreDto? GetStoreByStoreId(Guid StoreId)
         {
-            var result = _dbContext.Stores.Where(s => s.StoreId == StoreId);
+            StoreEntity? result = _dbContext.Stores.FirstOrDefault(s => s.StoreId == StoreId);
 
             if (result == null) return null;
 
             else
             {
-                IQueryable<StoreDto> storeDtos = result.Select(s => s.EStoreDto());
-                return storeDtos;
+                return result.EStoreDto();
             }
         }
 
