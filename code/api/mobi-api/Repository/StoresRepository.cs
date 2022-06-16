@@ -10,7 +10,7 @@ namespace mobi_api.Repository
         IEnumerable<StoreDto> GetAllStores();
         IQueryable<StoreDto> GetStoreByStoreId(Guid StoreId);
         void CreateStore(StoreEntity newStore);
-        StoreResponse UpdateStoreByStoreId(Guid StoreId, StoreRequest storeRequest);
+        StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto);
     }
 
     public class StoresRepository : IStoreRepository
@@ -59,28 +59,37 @@ namespace mobi_api.Repository
             _dbContext.SaveChanges();
         }
 
-        public StoreResponse? UpdateStoreByStoreId(Guid storeId, StoreRequest storeRequest)
+        public StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto)
         {
-            var store = _dbContext.Stores.FirstOrDefault(x => x.StoreId.Equals(storeId));
+            var existingStore = _dbContext.Stores.Find(storeId);
 
-            if (store == null) return null;
-            if (storeRequest.StoreName != null) store.StoreName = storeRequest.StoreName;
+            if (existingStore == null) return null;
 
-            if (storeRequest.PhoneNumber != null) store.PhoneNumber = storeRequest.PhoneNumber;
-
-            if (storeRequest.Address != null) store.Address = storeRequest.Address;
-
-            if (storeRequest.Website != null) store.Website = storeRequest.Website;
-
-            _dbContext.SaveChanges();
-
-            return new StoreResponse()
+            else
             {
-                StoreName = store.StoreName,
-                PhoneNumber = store.PhoneNumber,
-                Address = store.Address,
-                Website = store.Website,
-            };
+                var updatedStore = existingStore.EStoreDto() with
+                {
+                    StoreName = updateStoreDto.StoreName,
+                    PhoneNumber = updateStoreDto.PhoneNumber,
+                    Address = updateStoreDto.Address,
+                    Website = updateStoreDto.Website,
+                };
+
+                _dbContext.SaveChanges();
+
+                return updatedStore;
+            }
+
+            /*
+
+            if (store.StoreName != null) store.StoreName = updatedStore.StoreName;
+
+            if (store.PhoneNumber != null) store.PhoneNumber = updatedStore.PhoneNumber;
+
+            if (store.Address != null) store.Address = updatedStore.Address;
+
+            if (store.Website != null) store.Website = updatedStore.Website;*/
+
         }
     }
 }
