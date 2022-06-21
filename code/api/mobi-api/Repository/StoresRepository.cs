@@ -40,9 +40,9 @@ namespace mobi_api.Repository
             }
         }
 
-        public StoreDto? GetStoreByStoreId(Guid StoreId)
+        public StoreDto? GetStoreByStoreId(Guid storeId)
         {
-            StoreEntity? result = _dbContext.Stores.FirstOrDefault(s => s.StoreId == StoreId);
+            StoreEntity? result = _dbContext.Stores.FirstOrDefault(s => s.StoreId == storeId);
 
             if (result == null) return null;
 
