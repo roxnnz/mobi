@@ -11,8 +11,7 @@ namespace mobi_api.Dtos
         [Required]
         public string? Description { get; set; }
 
-        [Required]
-        [Range(0.00, 1000.00)]
+        [Required, Range(0.00, 1000.00)]
         public double Price { get; set; }
     }
 }
