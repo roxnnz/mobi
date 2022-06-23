@@ -1,4 +1,6 @@
 import { User } from '../models/User';
+import UserAPiClient from '../api/UserAPIClient';
+
 /**
  * @description ProductData is a class provice set and get products.
  * @export ProductData class
@@ -6,11 +8,13 @@ import { User } from '../models/User';
  */
 export default class UsersData {
   users: Array<User>;
+  userAPIClient: UserAPiClient;
   constructor() {
+    this.userAPIClient = new UserAPiClient();
     this.users = [];
   }
 
-  public getUserByLastName(lastName: string): User | undefined {
-    return this.users.find((user) => user.lastName == lastName);
+  public async getUserByUserId(userId: any): Promise<User> {
+    return await this.userAPIClient.getById(userId);
   }
 }
