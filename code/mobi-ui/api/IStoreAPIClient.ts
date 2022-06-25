@@ -5,7 +5,7 @@
 import MobiAPIClient from "./APIClient";
 
 export interface IStoreAPIClient {
-    getById(id: string): {};
+    getByStoreId(id: string): {};
     get(): {};
     post(data: any): {};
 }

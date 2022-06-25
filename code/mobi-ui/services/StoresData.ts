@@ -14,4 +14,9 @@ export default class StoresData {
   public async getAllStores(): Promise<Array<Store>> {
     return await this.storeAPIClient.get();
   }
+
+  // TODO: Change to string from any;
+  public async getStoreByStoreId(storeId: any): Promise<Store> {
+    return await this.storeAPIClient.getByStoreId(storeId);
+  }
 }
