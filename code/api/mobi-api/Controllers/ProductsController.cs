@@ -90,7 +90,25 @@ namespace mobi_api.Controllers
 
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, "Bad request");
+            }
+        }
+
+        [HttpPatch("[action]{productId}")]
+        public ActionResult<ProductDto> PacthProductByProductId([FromRoute] Guid productId, [FromBody] UpdateProductDto updateProductDto)
+        {
+            try
+            {
+                ProductDto updatedProduct = _productRepository.UpdateProductByProductId(productId, updateProductDto);
+                
+                if (updatedProduct == null) return NotFound();
+
+                return Accepted(updatedProduct);
+            }
+
+            catch
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, "Bad request");
             }
         }
 

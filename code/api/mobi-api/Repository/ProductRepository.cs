@@ -11,7 +11,7 @@ namespace mobi_api.Repository
         ProductDto GetProductByProductId(Guid productId);
         IQueryable<ProductDto> GetProductsByStoreId(Guid storeId);
         ProductDto AddProductByStoreId(Guid storeId, ProductEntity newProduct);
-        ProductResponse UpdateProductByProductId(Guid StoreId, ProductRequest product);
+        ProductDto UpdateProductByProductId(Guid StoreId, UpdateProductDto updateProductDto);
     }
     public class ProductsRepository : IProductRepository
     {
@@ -75,30 +75,29 @@ namespace mobi_api.Repository
             }
         }
 
-        public ProductResponse? UpdateProductByProductId(Guid productId, ProductRequest productRequest)
+        public ProductDto UpdateProductByProductId(Guid productId, UpdateProductDto updateProductDto)
         {
-            var product = _dbContext.Products.FirstOrDefault(x => x.ProductId == productId);
+            ProductEntity? updateProductEntity = _dbContext.Products.Find(productId);
 
-            if (product == null)
-                return null;
+            if (updateProductEntity == null) return null;
 
-            if (product != null)
-                product.ProductName = productRequest.ProductName;
-
-            if (product != null)
-                product.Description = productRequest.Description;
-
-            if (productRequest != null)
-                product.Price = productRequest.Price;
-
-            _dbContext.SaveChanges();
-
-            return new ProductResponse()
+            else
             {
-                ProductName = product.ProductName,
-                Description = product.Description,
-                Price = product.Price,
-            };
+                updateProductEntity.ProductName = updateProductDto.ProductName;
+
+                updateProductEntity.Description = updateProductDto.Description;
+
+                updateProductEntity.Price = updateProductDto.Price;
+
+                _dbContext.SaveChanges();
+
+                return updateProductEntity.EProductDto();
+
+            }
+
         }
     }
 }
+
+
+
