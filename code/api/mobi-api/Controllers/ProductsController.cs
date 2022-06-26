@@ -8,7 +8,7 @@ using mobi_api.Dtos;
 
 namespace mobi_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -19,14 +19,14 @@ namespace mobi_api.Controllers
             _productRepository = ProductRepository;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("products")]
         public ActionResult<ProductDto> GetAllProducts()
         {
             var products = _productRepository.GetAllProducts();
             return Ok(products);
         }
 
-        [HttpGet("[action]/{productId}")]
+        [HttpGet("product/{productId}")]
         public ActionResult<ProductDto> GetProductByProductId(Guid productId)
         {
             try
@@ -43,7 +43,7 @@ namespace mobi_api.Controllers
             }
         }
 
-        [Route("[action]/{storeId}")]
+        [Route("products/{storeId}")]
         [HttpGet]
         public ActionResult<List<ProductDto>> GetProductsByStoreId(Guid storeId)
         {
@@ -63,13 +63,13 @@ namespace mobi_api.Controllers
         }
 
         // POST api/<ProductsController>
-        [HttpPost]
+        [HttpPost("product")]
         public void Post([FromBody] string value)
         {
         }
 
         // PUT api/<ProductsController>/5
-        [HttpPut("[action]{storeId}")]
+        [HttpPut("product/{storeId}")]
         public ActionResult<ProductDto> PutProductByStoreId([FromRoute] Guid storeId, [FromBody] CreateProductDto createProductDto)
         {
             try
@@ -95,7 +95,7 @@ namespace mobi_api.Controllers
         }
 
         // DELETE api/<ProductsController>/5
-        [HttpDelete("[action]/{id}")]
+        [HttpDelete("product/{id}")]
         public void delete(int id)
         {
         }

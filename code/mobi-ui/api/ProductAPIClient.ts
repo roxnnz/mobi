@@ -17,6 +17,17 @@ export default class ProductAPIClient extends APIClient {
         }
     }
 
+    // TODO: change any to string type;
+    public async getProductsByStoreId(storeId: any) {
+        try {
+            const response = await fetch(`${this.host}/api/products/${storeId}`);
+            const data = response.json();
+            return data;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     public post() {
         // for futrue post calls
     }

@@ -14,6 +14,7 @@ export default class UsersData {
     this.users = [];
   }
 
+  // TODO: change any to string type;
   public async getUserByUserId(userId: any): Promise<User> {
     return await this.userAPIClient.getById(userId);
   }
