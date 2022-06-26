@@ -16,6 +16,8 @@ const Profile: NextPage = () => {
 
   return (
     <>
+      <div><h2 className='subtitle'>Products:</h2></div>
+      <hr />
       <ProductsList products={products} />
     </>
   );
