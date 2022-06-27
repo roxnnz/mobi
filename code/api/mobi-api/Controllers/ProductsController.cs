@@ -88,19 +88,19 @@ namespace mobi_api.Controllers
                 else return Created("GetProductsByStoreId", newProduct.EProductDto());
             }
 
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Bad request");
             }
         }
 
-        [HttpPatch("[action]{productId}")]
+        [HttpPatch("product/{productId}")]
         public ActionResult<ProductDto> PacthProductByProductId([FromRoute] Guid productId, [FromBody] UpdateProductDto updateProductDto)
         {
             try
             {
                 ProductDto updatedProduct = _productRepository.UpdateProductByProductId(productId, updateProductDto);
-                
+
                 if (updatedProduct == null) return NotFound();
 
                 return Accepted(updatedProduct);
@@ -113,9 +113,28 @@ namespace mobi_api.Controllers
         }
 
         // DELETE api/<ProductsController>/5
-        [HttpDelete("product/{id}")]
-        public void delete(int id)
+        [HttpDelete("product/{productId}")]
+        public ActionResult DeleteProductByProductId(Guid productId)
         {
+            try
+            {
+                var existingProduct = _productRepository.GetProductByProductId(productId);
+
+                if (existingProduct == null) return NotFound();
+
+                else
+                {
+                    _productRepository.DeleteProductByProductId(productId);
+
+                    return Ok();
+                }
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, "Bad Request");
+            }
         }
+
     }
 }
+

@@ -8,7 +8,7 @@ using mobi_api.Dtos;
 
 namespace mobi_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class StoresController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace mobi_api.Controllers
         }
 
         // GET: api/<ValuesController>
-        [HttpGet]
+        [HttpGet("stores")]
         public ActionResult<StoreDto> GetAllStores()
         {
             var stores = _storeRepository.GetAllStores();
@@ -29,7 +29,7 @@ namespace mobi_api.Controllers
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{storeId}")]
+        [HttpGet("store/{storeId}")]
         public ActionResult<StoreDto> GetStoreByStoreId([FromRoute] Guid storeId)
         {
             try
@@ -49,7 +49,7 @@ namespace mobi_api.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
+        [HttpPost("store")]
         public ActionResult PostNewStore([FromBody] CreateStoreDto createStoreDto)
         {
             try
@@ -89,6 +89,7 @@ namespace mobi_api.Controllers
         }
 
         // DELETE api/<ValuesController>/5
+        // TO DO Delete store by storeId
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
