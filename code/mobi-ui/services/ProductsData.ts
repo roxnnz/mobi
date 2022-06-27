@@ -19,11 +19,12 @@ export default class ProductsData {
   }
 
   //TODO: change type any to string;
-  public async getProductsByStoreId(storeId: any): Promise<Array<Product> | undefined> {
+  public async getProductsByStoreId(storeId: any): Promise<Array<Product>> {
     try {
       return await this.ProductAPIClient.getProductsByStoreId(storeId);
     } catch (error) {
       console.log(error)
+      return [];
     }
   }
 }

@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -11,17 +12,24 @@ const Home: NextPage = () => {
         <section className="p-6">
           <div className="tile is-ancestor">
             <div className="tile is-vertical is-8">
+
               <div className="tile">
+
                 <div className="tile is-parent is-vertical">
-                  <article className="tile is-child notification is-primary">
-                    <p className="title">Ads</p>
-                    <p className="subtitle">Top tile</p>
-                  </article>
-                  <article className="tile is-child notification is-warning">
-                    <p className="title">Ads</p>
-                    <p className="subtitle">Bottom tile</p>
-                  </article>
+                  <Link href="/stores">
+                    <article className="tile is-child notification is-primary">
+                      <p className="title">Stores</p>
+                      <p className="subtitle">Mobi stores</p>
+                    </article>
+                  </Link>
+                  <Link href="/products">
+                    <article className="tile is-child notification is-warning">
+                      <p className="title">Products</p>
+                      <p className="subtitle">All products</p>
+                    </article>
+                  </Link>
                 </div>
+
                 <div className="tile is-parent">
                   <article>
                     <figure className="image">
@@ -37,7 +45,9 @@ const Home: NextPage = () => {
                   <div className="content"></div>
                 </article>
               </div>
+
             </div>
+
             <div className="tile is-parent">
               <article className="tile is-child notification is-success">
                 <div className="content">

@@ -15,7 +15,7 @@ const sAPIClient = new StoreData();
 const Store: NextPage = () => {
     const router = useRouter()
     const { storeId } = router.query
-    const [storeProductData, setStoreProductData] = useState<Array<Product>>([]);
+    const [storeProductData, setStoreProductData] = useState<Array<Product>>([{ productId: "", productName: "", description: "", price: 0 }]);
     const initStore: Store = {
         storeId: "",
         storeName: "",
