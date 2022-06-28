@@ -80,7 +80,7 @@ namespace mobi_api.Controllers
         }
 
         // update /Stores/
-        [HttpPatch("{storeId}")]
+        [HttpPatch("store/{storeId}")]
         public ActionResult<StoreDto> PatchStoreByStoreId([FromRoute] Guid storeId, [FromBody] UpdateStoreDto updateStoreDto)
         {
             var updatedStore = _storeRepository.UpdateStoreByStoreId(storeId, updateStoreDto);
@@ -90,9 +90,26 @@ namespace mobi_api.Controllers
 
         // DELETE api/<ValuesController>/5
         // TO DO Delete store by storeId
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("store/{storeId}")]
+        public ActionResult DeleteStoreByStoreId(Guid storeId)
         {
+            try
+            {
+                var existingStore = _storeRepository.GetStoreByStoreId(storeId);
+
+                if (existingStore == null) return NotFound();
+
+                else
+                {
+                    _storeRepository.DeleteStoreByStoreId(storeId);
+
+                    return Ok();
+                }
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, "Bad Request");
+            }
         }
     }
 }

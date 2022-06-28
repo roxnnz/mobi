@@ -53,7 +53,6 @@ namespace mobi_api.Repository
             }
         }
 
-
         public ProductDto? AddProductByStoreId(Guid storeId, ProductEntity newProduct)
         {
             var store = _dbContext.Stores.Find(storeId);
