@@ -88,7 +88,7 @@ namespace mobi_api.Controllers
                 else return Created("GetProductsByStoreId", newProduct.EProductDto());
             }
 
-            catch (Exception)
+            catch (Exception Ex)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Bad request");
             }
