@@ -12,6 +12,7 @@ namespace mobi_api.Repository
         IQueryable<ProductDto> GetProductsByStoreId(Guid storeId);
         ProductDto AddProductByStoreId(Guid storeId, ProductEntity newProduct);
         ProductDto UpdateProductByProductId(Guid StoreId, UpdateProductDto updateProductDto);
+        void DeleteProductByProductId(Guid productId);
     }
     public class ProductsRepository : IProductRepository
     {
@@ -33,7 +34,9 @@ namespace mobi_api.Repository
         {
             ProductEntity exProductEntity = _dbContext.Products.First(p => p.ProductId == productId);
 
-            return exProductEntity.EProductDto();
+            if (exProductEntity == null) return null;
+
+            else return exProductEntity.EProductDto();
         }
 
         public IQueryable<ProductDto> GetProductsByStoreId(Guid storeId)
@@ -95,6 +98,15 @@ namespace mobi_api.Repository
 
             }
 
+        }
+
+        public void DeleteProductByProductId(Guid productId)
+        {
+            var existProductEntity = _dbContext.Products.Find(productId);
+
+            _dbContext.Remove(existProductEntity);
+
+            _dbContext.SaveChanges();
         }
     }
 }
