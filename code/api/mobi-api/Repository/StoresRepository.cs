@@ -11,6 +11,7 @@ namespace mobi_api.Repository
         StoreDto? GetStoreByStoreId(Guid StoreId);
         void CreateStore(StoreEntity newStore);
         StoreDto UpdateStoreByStoreId(Guid storeId, UpdateStoreDto updateStoreDto);
+        void DeleteStoreByStoreId(Guid storeId);
     }
 
     public class StoresRepository : IStoreRepository
@@ -84,6 +85,15 @@ namespace mobi_api.Repository
                     Website = exStoreEntity.Website,
                 };
             }
+        }
+
+        public void DeleteStoreByStoreId(Guid storeId)
+        {
+            var existProductEntity = _dbContext.Stores.Find(storeId);
+
+            _dbContext.Remove(existProductEntity);
+
+            _dbContext.SaveChanges();
         }
     }
 }
